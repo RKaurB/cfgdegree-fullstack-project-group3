@@ -46,3 +46,16 @@ Register/login → Search plants → View Plant Details → Add/save Plant to My
     - Auto-generated growth schedule tick-boxes/to do list with dates (e.g. Sow seeds, water, prune, harvest plant, etc)
     - View upcoming/completed tasks
     - Track and complete tasks
+
+## Wireframe
+We projected the wireframe to picture the 4 pages of our website.
+
+![Wireframe](Frontend/src/assets/wireframe.png)
+
+## Colour Palette
+- 🟩 Forest Green `#3E5C34`
+- 🌿 Sage Green `#8BAE78`
+- 🟨 Sand Beige `#C9B99A`
+- 🤍 Cream White `#FDF6EC`
+
+![Palette](Frontend/src/assets/palette.png)
