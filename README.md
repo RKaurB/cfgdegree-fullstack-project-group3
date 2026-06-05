@@ -1,5 +1,5 @@
-# cfgdegree-fullstack-project-group3
-Group project for the CFGdegree Fullstack stream (Spring/Summer 2026).
+# Introducing Garden Buddy
+Garden Buddy is a gardening planner web app where users can search/discover plants, save plants to a personal garden, receive auto-generated care schedules, and track completed gardening tasks.
 
 ## Features and MVP Screen
 ### Key Features
