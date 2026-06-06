@@ -13,3 +13,17 @@
 .navbar a {
   color: var(--color-cream) !important;
 }
+
+.btn-garden-dark {
+  background-color: var(--color-dark-green);
+  color: var(--color-cream);
+  border: 2px solid var(--color-beige);
+  border-radius: 8px;
+}
+
+.btn-garden-light {
+  background-color: var(--color-cream);
+  color: var(--color-dark-green);
+  border: 2px solid var(--color-light-green);
+  border-radius: 8px;
+}
