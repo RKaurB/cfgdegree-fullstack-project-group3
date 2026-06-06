@@ -8,5 +8,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "firebase": "^12.14.0",
+    "mongodb": "^7.2.0"
   }
 }
