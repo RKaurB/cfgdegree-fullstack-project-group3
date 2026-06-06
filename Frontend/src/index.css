@@ -15,15 +15,15 @@
 }
 
 .btn-garden-dark {
-  background-color: var(--color-dark-green);
-  color: var(--color-cream);
-  border: 2px solid var(--color-beige);
-  border-radius: 8px;
+  background-color: var(--color-dark-green) !important;
+  color: var(--color-cream) !important;
+  border: 2px solid var(--color-beige) !important;
+  border-radius: 15px !important;
 }
 
 .btn-garden-light {
-  background-color: var(--color-cream);
-  color: var(--color-dark-green);
-  border: 2px solid var(--color-light-green);
-  border-radius: 8px;
+  background-color: var(--color-cream) !important;
+  color: var(--color-dark-green) !important;
+  border: 2px solid var(--color-light-green) !important;
+  border-radius: 15px !important
 }

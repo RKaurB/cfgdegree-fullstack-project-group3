@@ -1,5 +1,5 @@
 function Button(props) {
-    return <button className={`btn ${props.variant}`}>{props.text}</button>
+    return <button className={`btn ${props.color}`}>{props.text}</button>
 }
 
 export default Button
