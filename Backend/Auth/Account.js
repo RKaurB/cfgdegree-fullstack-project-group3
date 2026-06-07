@@ -11,13 +11,16 @@ class Account{
                 const token = await user.user?.getIdToken()
                 if(token == null){
                 return{
-                    status : 409,
+                    status : 400,
                     message: user.errorCode
                 }
                 }
                 return {
+                    status: 200,
                     name:user.user?.displayName,
-                    email:user.user?.email
+                    email:user.user?.email,
+                    ID: token,
+                    message:"Login Successfully"
                 }
 
         }catch(error){
@@ -27,7 +30,7 @@ class Account{
             }
         }
     }
-       async SignUp(name,email,password){
+    async SignUp(name,email,password){
         try{
             const user = await this.firebase.createUserUsingEmail(name,email,password);
             const token = await user.user?.getIdToken()

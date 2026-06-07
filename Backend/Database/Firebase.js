@@ -53,8 +53,6 @@ dotenv.config()
 
         try{
             const userCredential = await  signInWithEmailAndPassword(this.#auth,email,password);
-            //userCredential.
-    
             return {user:userCredential?.user}
         }catch(error){
 
