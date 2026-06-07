@@ -27,13 +27,6 @@ test("Login Correctly and Return 200 ", async () =>{
   expect(await result.ID).not.toBeUndefined()
 })
 
-test("Login Correctly and Return 200 ", async () =>{
-  const result = await account.LoginIn("test12@gi.com","G/2%,J];Muge<<8M")
-  console.log(result.message)
-  expect(await result.status).toBe(200)
-  expect(await result.ID).not.toBeUndefined()
-})
-
 test("Login Incorrectly and Return 400 ", async () =>{
   const result = await account.LoginIn("test12@gi.com","G/2%,J];dssad<<8M")
   console.log(result.message)

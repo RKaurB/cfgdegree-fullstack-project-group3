@@ -15,13 +15,13 @@ dotenv.config()
     #auth;
     constructor(){
       const firebaseConfig = {
-            apiKey: `${process.env.ApiKey}`,
+            apiKey: `${process.env.FIREBASE_APIKEY}`,
             authDomain: "fullstackgroup3-610c2.firebaseapp.com",
             projectId: "fullstackgroup3-610c2",
             storageBucket: "fullstackgroup3-610c2.firebasestorage.app",
             messagingSenderId: "667266312602",
-            appId: `${process.env.AppID}`,
-            measurementId: `${process.env.MeasurementId}`
+            appId: `${process.env.FIREBASE_APPID}`,
+            measurementId: `${process.env.FIREBASE_MeasurementID}`
         }   
         const app = initializeApp(firebaseConfig);
         this.#db = getFirestore(app)
