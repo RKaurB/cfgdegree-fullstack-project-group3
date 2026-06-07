@@ -44,6 +44,7 @@ body {
   background-position: center;
   padding: 100px 40px;
   position: relative;
+  height: 400px;
 }
 
 .hero::before {
