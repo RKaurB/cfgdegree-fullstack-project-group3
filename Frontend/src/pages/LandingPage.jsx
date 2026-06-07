@@ -11,7 +11,7 @@ function LandingPage() {
         </p>
       </div>
 
-      <div className="container">
+      <div className="container" id="auth-section">
         <div className="row mt-5 justify-content-center">
           <div className="col auth-form h-100">
             <form>
