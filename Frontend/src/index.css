@@ -81,3 +81,9 @@ input {
   flex-direction: column;
 }
 
+/* FOOTER */
+
+footer {
+  color: var(--color-cream);
+  background-color: var(--color-dark-green);
+}
