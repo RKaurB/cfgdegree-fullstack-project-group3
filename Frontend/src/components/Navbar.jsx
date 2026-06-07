@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom'
+
 function NavBar() {
     return <nav className="navbar navbar-expand">
         <div className="container-fluid">
-        <a href="/home" className="navbar-brand">Garden Buddy</a>
+        <Link to="/home" className="navbar-brand">Garden Buddy</Link>
         <div className="navbar-nav ms-auto">
-        <a href="/login" className="nav-link">Login</a>
-        <a href="/register" className="nav-link">Register</a>
+        <Link to="/login" className="nav-link">Login</Link>
+        <Link to="/register" className="nav-link">Register</Link>
         </div>
         </div>
         </nav>
