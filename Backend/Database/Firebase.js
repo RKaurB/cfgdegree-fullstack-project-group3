@@ -1,9 +1,15 @@
 import { initializeApp } from 'firebase/app';
-import {getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword }from 'firebase/auth'
+import {getAuth,
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, 
+        signOut,
+        updateProfile,
+    }from 'firebase/auth'
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
-class FirebaseDB{
+export class FirebaseDB{
     #db;
     #auth;
     constructor(){
@@ -21,9 +27,14 @@ class FirebaseDB{
         this.#auth = getAuth(app)
     }
 
-    async createUserUsingEmail(email,password) {
+    //Auth
+    async createUserUsingEmail(name,email,password) {
         try{
             const userCredential = await createUserWithEmailAndPassword(this.#auth,email,password);
+            await updateProfile(userCredential.user,{
+                displayName:`${name}`
+            })
+
             return {user:userCredential.user}
         }catch(error){
             return {
@@ -40,7 +51,9 @@ class FirebaseDB{
     async loginUserUsingEmail(email,password){
 
         try{
-            const userCredential = await signInWithEmailAndPassword(this.#auth,email,password);
+            const userCredential = await  signInWithEmailAndPassword(this.#auth,email,password);
+            //userCredential.
+    
             return {user:userCredential?.user}
         }catch(error){
             return {
@@ -49,5 +62,21 @@ class FirebaseDB{
             }
         }
     }
+    async Signout(){
+        try{
+            await signOut(this.#auth)
+        }catch(error){
+        return{
+            errorCode: error?.code,
+            errorMessage:error?.message
+        }
+        }
+    }
+
+
+    //Database 
+
+    //User 
+
             
 }
