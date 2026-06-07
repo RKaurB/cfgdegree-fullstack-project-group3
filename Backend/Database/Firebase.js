@@ -1,15 +1,16 @@
-import { initializeApp } from 'firebase/app';
-import {getAuth,
-        createUserWithEmailAndPassword, 
-        signInWithEmailAndPassword, 
+const { initializeApp } = require('firebase/app')
+const { getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
         signOut,
         updateProfile,
-    }from 'firebase/auth'
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import dotenv from 'dotenv'
+        deleteUser
+} = require('firebase/auth')
+const { getFirestore, collection, getDocs } = require('firebase/firestore/lite')
+const dotenv = require('dotenv')
 dotenv.config()
 
-export class FirebaseDB{
+ class FirebaseDB{
     #db;
     #auth;
     constructor(){
@@ -56,6 +57,7 @@ export class FirebaseDB{
     
             return {user:userCredential?.user}
         }catch(error){
+
             return {
                 errorCode: error?.code,
                 errorMessage:error?.message
@@ -73,10 +75,16 @@ export class FirebaseDB{
         }
     }
 
+    async DeleteCurrentUser(){
+        const user = this.#auth.currentUser;
+        try{
+            deleteUser(user)
+        }catch(error){
 
-    //Database 
-
-    //User 
-
+        }
+        
+    }
+    //////Collection
             
 }
+module.exports = {FirebaseDB}

@@ -1,32 +1,55 @@
-import {FirebaseDB} from "../Database/Firebase.js"
-export class Account{
+const { FirebaseDB } = require("../Database/Firebase")
+
+class Account{
     constructor(){
         this.firebase = new FirebaseDB()
     }
 
-    async LoginIn(email,password,isGoogle){
+    async LoginIn(email,password){
         try{
-            if(!isGoogle){
                 const user = await this.firebase.loginUserUsingEmail(email,password);
+                const token = await user.user?.getIdToken()
+                if(token == null){
+                return{
+                    status : 409,
+                    message: user.errorCode
+                }
+                }
                 return {
                     name:user.user?.displayName,
                     email:user.user?.email
                 }
-            }
+
         }catch(error){
-            return error
+            return {
+                status:500,
+                message:error
+            }
         }
     }
        async SignUp(name,email,password){
         try{
             const user = await this.firebase.createUserUsingEmail(name,email,password);
+            const token = await user.user?.getIdToken()
+            if(token == null){
+                return{
+                    status : 409,
+                    message: user.errorCode
+                }
+            }
             return {
                 name:user.user?.displayName,
-                email:user.user?.email
+                email:user.user?.email,
+                ID: token,
+                status: 201,
+                message: "Account is created"
             }
 
         }catch(error){
-            return error;
+            return {
+                status:500,
+                message:error
+            }
         }
     }
     async SignoutCurrentAccount(){
@@ -36,5 +59,14 @@ export class Account{
         return error
         }
     }
+    async DeleteCurrentAccount(){
+        try{
+            await this.firebase.DeleteCurrentUser()
+        }catch(error){
+            console.error(error)
+        }
+    }
     
 }
+
+module.exports = {Account}
