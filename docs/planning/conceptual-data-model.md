@@ -1,0 +1,1 @@
+![Database ERD](gardenbuddy_ERD.png)
