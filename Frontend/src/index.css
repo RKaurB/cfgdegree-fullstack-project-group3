@@ -20,6 +20,7 @@ body {
   color: var(--color-cream) !important;
 }
 
+/* BTN DESIGN FOR DARK AND LIGHT BACKGROUNDS */
 .btn-garden-dark {
   background-color: var(--color-dark-green) !important;
   color: var(--color-cream) !important;
