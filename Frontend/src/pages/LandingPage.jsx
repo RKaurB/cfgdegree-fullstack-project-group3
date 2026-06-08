@@ -1,4 +1,6 @@
 import Button from "../components/Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLeaf, faSeedling, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
 function LandingPage() {
   return (
@@ -9,6 +11,28 @@ function LandingPage() {
           Your personal garden planner — discover plants, build your garden and
           never miss a watering day.
         </p>
+      </div>
+
+      <div className="container mt-4 p-4" id="features-section">
+        <div className="row">
+            <div className="col">
+                <FontAwesomeIcon icon={faLeaf} style={{fontSize: '48px'}}/>
+                <h5>Discover Plants</h5>
+                <p>Search and explore thousands of plants to find the perfect ones for your garden.</p>
+            </div>
+            <div className="col">
+                <FontAwesomeIcon icon={faSeedling} style={{fontSize: '48px'}}/>
+                <h5>Build Your Garden</h5>
+                <p>Save your favourite plants and create your own personalised garden collection.</p>
+
+            </div>
+            <div className="col">
+                <FontAwesomeIcon icon={faCalendarDays} style={{fontSize: '48px'}}/>
+                <h5>Never Miss a Watering Day</h5>
+                <p>Get auto-generated care schedules and track your gardening tasks with ease.</p>
+            </div>
+
+        </div>
       </div>
 
       <div className="container" id="auth-section">
