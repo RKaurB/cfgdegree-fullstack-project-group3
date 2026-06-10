@@ -29,6 +29,11 @@ app.post("/register",async (req,res)=>{
 
 })
 
+app.post("/signout", async ()=>{
+  
+})
+
+
 function checkIfParameterAvailable(obj, field) {
   for (let i = 0; i < field.length; i++) {
     if (obj?.[field[i]] == null || obj?.[field[i]] == "") return false;
