@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { searchPlants } = require("./Services/PerenualService");
 const express = require("express")
 const {Account} = require("./Auth/Account")
 const app = express();
@@ -43,3 +44,36 @@ app.listen(3000,(err) => {
   }
   console.log(`Listen At PORT 3000`);
 });
+
+// Test: verify .env variables loading correctly
+// console.log(process.env.PERENUAL_API_KEY);
+
+// Import search function
+
+
+/* 
+// Test Perenual search endpoint
+const testSearch = async () => {
+  try {
+
+    const data = await searchPlants("cilantro");
+    // const data = await searchPlants("tarragon");
+    // const data = await searchPlants("rosemary");
+    // const data = await searchPlants("fennel");
+    // const data = await searchPlants("dahlia");
+    // const data = await searchPlants("qwerty123");
+
+    // console.log(data);
+    console.log(JSON.stringify(data, null, 2));
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+};
+
+testSearch(); 
+*/
+
