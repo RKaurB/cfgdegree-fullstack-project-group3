@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./PlantCard.module.css";
 
 export default function PlantCardComponent({
@@ -5,6 +6,7 @@ export default function PlantCardComponent({
   date,
   image,
   onView,
+  onDelete
 }) {
   return (
     <div className={styles.card}>
@@ -16,16 +18,26 @@ export default function PlantCardComponent({
         />
       )}
 
-      <p className={styles.date}>{date}</p>
+      <p className={styles.date}>Added : {date}</p>
 
       <h3 className={styles.name}>{name}</h3>
-
-      <button
+      <div className={styles.buttonGroup}>
+        <button
         className={styles.viewButton}
         onClick={onView}
       >
         View
       </button>
+       <button 
+        className={styles.deleteButton} 
+        onClick={onDelete} 
+        title="Remove plant"
+      >
+        Delete
+      </button>
+      </div>
+      
+
     </div>
   );
 }
