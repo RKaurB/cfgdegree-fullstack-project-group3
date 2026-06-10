@@ -56,7 +56,7 @@ GET `https://perenual.com/api/v2/species-list?key={API_KEY}`
 ### Note
 
 - Don’t share the API key in GitHub
-- Store API in backend .env file
+- Store API key in backend .env file
 - Frontend should not access the API key directly
 - All Perenual requests should be made through our Express backend
 
@@ -86,14 +86,37 @@ GET `https://perenual.com/api/v2/species-list?key={API_KEY}&q=carrot`
 
 ### Tested plant search terms
 
-| Search term          | Result                                       |
-|----------------------|----------------------------------------------|
-| basil	               | Success (id: 5498)                           |
-| rosemary             | Success (id: 7109)                           |
-| carrot               | Success (id: 2320)                           |
-| tomato               | Success (id: 5021, or id: 2292 tree tomato)  | 
-| dahlia               | Success (id: 2300)                           |
-| qwerty123            | No results                                   |
+| Search term          | Result           | Example id        |
+|----------------------|------------------|-------------------|
+| basil	               | Success          | 5498              |
+| cilantro             | Success          | 2098              |
+| tarragon             | Success          | 974               |
+| dill                 | Success          | 834               |
+| celery               | Success          | 862               |
+| fennel               | Success          | 2979              |
+| rosemary             | Success          | 7109              |
+| calamint             | Success          | 1464              |
+| carrot               | Success          | 2320              |
+| tomato               | Success          | 5021              | 
+| turnip               | Success          | 1333              |
+| kale                 | Success          | 1320              |
+| beetroot             | No results       |                   |
+| beet                 | Success          | 1273              |
+| courgette            | No results       |                   |
+| zucchini             | Success          | 2255              |
+| brussel sprouts      | Success          | 1325              |
+| broccoli             | Success          | 1327              |
+| asparagus            | Success          | 1026/1027/1029    |
+| chives               | Success          | 669               |
+| pineapple            | Success          | 791               |
+| strawberry           | Success          | 3013              |
+| apple                | Success          | 362/363/365       |
+| dahlia               | Success          | 2300              |
+| daisy                | Success          | 1227              |
+| carnation            | Success          | 2380              |
+| daffodil             | Success          | 5325              |
+| foxglove             | Success          | 2483/2493         |
+| qwerty123            | No results       |                   |
 
 
 ### Example empty response
@@ -113,6 +136,7 @@ GET `https://perenual.com/api/v2/species-list?key={API_KEY}&q=carrot`
 "id": 123,
 "common_name": "Plant Name, e.g. carrot",
 "scientific_name": "Scientific Name",
+"other_name": [],
 "default_image": {
     "original_url": "..."
     }
@@ -123,10 +147,70 @@ GET `https://perenual.com/api/v2/species-list?key={API_KEY}&q=carrot`
 
 - `id` (unique plant identifier)
 - `common_name` (display plant name)
-- `scientific_name` (optional)
+- `scientific_name` (optional, scientific name)
+- `other_name` (optional, alternative names)
 - `default_image` (plant image)
 
-### Proposed Backend Endpoint:
+
+### Search behaviour and data quality notes
+
+#### Duplicate common names
+
+Some search results return multiple plants sharing the same common name.
+
+**Example search term:** `"carnation"`
+
+- Multiple results returned with the same common name
+- Scientific names differed between results
+- Some records contained additional fields not present in others
+- e.g. Some duplicate records contained a `type` field while others did not
+- We may need to display scientific names alongside common names, to help users distinguish between similar plants.
+
+#### Regional naming differences
+
+Testing identified differences between UK and US plant names. 
+
+The API appears to favour US naming conventions.
+
+**Example search results:**
+
+| UK                          | US                          |
+|-----------------------------|-----------------------------|
+| `beetroot` no results       | `beet` results returned     |
+| `courgette` no results      | `zucchini` results returned |
+
+**Potential future enhancement:** We could map common UK plant names to recognised API search terms.
+
+#### Alternative name(s) field
+
+The `other_name` field is not consistently available.
+
+- Some plants contain alternative names
+- Alternative names appear to represent regional or common naming variations
+- Many tested plants do not include this field
+
+#### Search matching behaviour
+
+The API search behaviour is broader than a simple `common_name` lookup.
+
+- Results may be matched using `scientific_name` or `other_name`
+- Some returned results do not appear to contain the search term in the `common_name`
+
+#### Category (`type`) inconsistencies
+
+There are some inconsistencies between `type` values.
+
+**Examples:**
+
+- Herb
+- Herbs
+- Bulb (where plant is also a herb)
+
+Note that `type` is a string, so cannot store more than one category value (e.g. if a plant could be categorised as more than one type).
+
+We may need to try and map these values into simplified internal categories - such as Herb, Vegetable, Flower, Fruit - to help support scheduling and task generation logic.
+
+### Proposed Backend endpoint:
 
 GET `/api/plants/search?q={plant}`
 
@@ -170,7 +254,7 @@ GET `https://perenual.com/api/v2/species/details/2320?key={API_KEY}`
 "watering_general_benchmark": {
     "value": "\"3-4\"",
     "unit": "days"
-}
+},
 "sunlight": ["Full Sun"],
 "default_image": {
     "original_url": "..."
@@ -192,11 +276,11 @@ GET `https://perenual.com/api/v2/species/details/2320?key={API_KEY}`
 - `sunlight` (e.g. “full sun”)
 - `pruning_month`
 - `seeds` (true/false)
-- `maintenance` (e.g. “Low”)
+- `maintenance` (effort required or time/task frquency, e.g. “Low”)
 - `care_guides` (e.g. "http://perenual.com/api/species-care-guide-list?species_id=2320&key={API_KEY}")
 - `growth_rate` (e.g. “High”)
 - `indoor` (true/false)
-- `care_level` (e.g. “Medium”)
+- `care_level` (how forgiving the plant is, e.g. “Medium”)
 - `harvest_season`
 - `description` (in long paragraph format)
 - `default_image` (same as plant search fields)
@@ -210,14 +294,13 @@ GET `https://perenual.com/api/v2/species/details/2320?key={API_KEY}`
 - `watering` (useful plant care info) ✅
 - `sunlight` (growing requirements, useful plant care info) ✅
 - `cycle` (plant lifecycle, not essential)
-- `maintenance` or care_level (care difficulty, useful) ✅
+- `maintenance` or `care_level` (care difficulty, useful) ✅
 - `indoor` (could filter for outdoor only, maybe simpler to leave out)
 - `description` (plant information, adds value to Details page) ✅
 - `care_guides` (link, optional/stretch goal?)
 
 ### TODO
 
-- What is difference between maintenance and care_level fields? And which one is populated more consistently?
 - Should indoor-only plants be excluded from MVP (i.e. outdoor, garden plants only)?
 - Which fields should appear on the Plant Details page?
 
@@ -243,6 +326,46 @@ Display:
 - Sunlight (`sunlight`)
 - Care Difficulty (`maintenance` or `care_level`)
 - Description (`description`)
+
+### Tested plant IDs
+
+| ID        | Plant name      | Results/data notes                                       |
+|-----------|-----------------|----------------------------------------------------------|
+| 5498 	    | basil           | Returns: `SyntaxError: Unexpected token 'P',`            |
+|           |                 | `"Please Upg"... is not valid JSON`                      |
+|           |                 | `at JSON.parse (<anonymous>)`                            |
+| 2098      | cilantro        | Herb, no `care_level`                                    |
+| 974       | tarragon        | Herb                                                     |
+| 834       | dill            | Herb, no `other_name`, no `care_level`                   |
+| 862       | celery          | Herb, no `other_name`                                    |
+| 2979      | fennel          | Herb, no `other_name`                                    |
+| 7109      | rosemary        | Returns: `SyntaxError: Unexpected token 'P',`            |
+|           |                 | `"Please Upg"... is not valid JSON`                      |
+|           |                 | `at JSON.parse (<anonymous>)`                            |
+| 1464      | calamint        | Herbs, no `other_name`                                   |
+| 2320      | carrot          | Vegetable, no `other_name`                               |
+| 5021      | tomato          | Returns: `SyntaxError: Unexpected token 'P',` (as above) | 
+| 1333      | turnip          | Vegetable, no `other_name`                               |
+| 1320      | kale            | Vegetable, no `other_name`                               | 
+| 1273      | beet            | Vegetable, no `other_name`                               |
+| 2255      | zucchini        | Fruit, matches with `other_name` only                    |
+| 1325      | brussel sprouts | Vegetable, no `other_name`                               |
+| 1327      | broccoli        | Vegetable, no `other_name`                               |
+| 1026      | asparagus       | `type` null, 1027 duplicate is Vegetable, no `other_name`|
+| 669       | chives          | Bulb (but is also a herb), no `other_name`               |
+| 791       | pineapple       | Fruit, no `other_name`                                   |
+| 3013      | strawberry      | Returns: `SyntaxError: Unexpected token 'P',` (as above) |
+| 362       | Gala apple      | tree, various apple types e.g 363/365, no `other_name`,  |
+|           |                 | no `maintenance` or `care_level`                         |
+| 2300      | dahlia          | Flower, no `other_name`                                  |
+| 1227      | English daisy   | Flower                                                   |
+| 2380      | carnation       | Flower, no `other_name` or `care_level`                  |
+| 5325      | daffodil        | Returns: `SyntaxError: Unexpected token 'P',` (as above) |
+| 2483      | foxglove        | Herb (incorrect, should be Flower), no `other_name`,     |
+|           |                 | `default_image` null                                     |
+| 2493      | common foxglove | `type` null, no `other_name`, `care_level` null,         |
+|           |                 | `default_image` null                                     |
+
 
 ### Proposed Backend endpoint:
 
@@ -361,11 +484,24 @@ flowchart TD
 ### API Rate Limits
 
 - Free tier allows developer accounts to make 100 API requests per day. 
-- The API contains thousands of plant species details, but only the first 3000 are available on free tier – this will restrict the plants that we can search for.
+- The API contains thousands of plant species details.
+- Search results may return plants with IDs >3000.
+- The free-tier Plant Details endpoint is limited to IDs 1-3000, so this restricts the plants that we can get full details for.
+- During testing, Plant Details requests succeed for tested IDs <=3000.
+- Plant ID 3001 returned an "Upgrade plan" message instead of JSON (JSON parsing error).
+
+
 - We could store saved plant data in the database, to avoid repeated requests for the same plant (e.g. when User clicks `Add Plant to Garden`, we save part of the plant information from Perenual into our own database vs asking Perenual for that info each time).
 - TODO: How should we handle API rate limits during development and testing?
 
-### Missing data
+### Missing data and optional fields
+
+Some fields are not consistently populated across all plants. The Frontend will need to handle missing values and display fallback values where necessary, e.g. 'Information unavailable'.
+
+**Examples:**
+
+- `other_name`
+- `type`
 
 Some plants may have missing data for some fields, so the frontend will need to handle this (fallback values where necessary, e.g. ‘Information unavailable’)
 
@@ -377,13 +513,30 @@ We could ignore pagination for MVP and use the first page of results only.
 
 ## Conclusion
 
-The Search and Plant Details endpoints provide all of the information needed to:
+Overall, the Search and Plant Details endpoints provide all of the information needed to:
 
 - Search plants
 - View plant details
 - Display plant images
 - Categorise plants
 
-The plant type field may also provide the connection between plant management and plant care scheduling, by enabling the app to select the appropriate (Flower/Veg/Herb) schedule template.
+The plant `type` field may also provide the connection between plant management and plant care scheduling, by enabling the app to select the appropriate (e.g. Flower/Veg/Herb) schedule template.
 
-We will need to keep in mind the API rate limits and potential missing data for some plants.
+Testing identified some data quality and consistency considerations, including:
+
+- Optional fields
+- Duplicate common names
+- Inconsistent category values
+- Scientific name formatting differences
+- Regional naming differences
+- Free-tier Plant Details endpoint limitations
+
+These findings need to be considered when designing the Garden Buddy Plant API, scheduling logic, and user experience.
+
+### Recommended approach for MVP
+
+- Use Perenual Search for plant discovery
+- Use Perenual Plant Details for plant information
+- Map Perenual categories into simplified Garden Buddy categories
+- Use predefined care templates for scheduling
+- Focus initially on plants with verified Plant Details endpoint results
