@@ -5,9 +5,10 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "node server.js"
   },
   "jest": {
     "transform": {}
@@ -15,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "firebase": "^12.14.0",
     "jest": "^30.4.2"
   },
