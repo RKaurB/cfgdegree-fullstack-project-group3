@@ -11,7 +11,7 @@ function SearchPage() {
   const [query, setQuery] = useState("");
 
   // Stores the plant clicked by the user
-  // If null is closed
+  // If null its closed
   const [selectedPlant, setSelectedPlant] = useState(null);
 
   // Filter plants based on search input
