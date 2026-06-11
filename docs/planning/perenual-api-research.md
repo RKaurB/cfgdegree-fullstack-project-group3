@@ -503,8 +503,6 @@ Some fields are not consistently populated across all plants. The Frontend will 
 - `other_name`
 - `type`
 
-Some plants may have missing data for some fields, so the frontend will need to handle this (fallback values where necessary, e.g. ‘Information unavailable’)
-
 ### Pagination
 
 Search results are paginated (e.g. `page={page_number}`)
