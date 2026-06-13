@@ -15,8 +15,6 @@ These templates cover three broad plant categories (`type`):
 Plants that do not fall into one of these categories will be assigned a General Plant template, so that all saved plants can receive a basic care schedule.   
 
 
-
-
 ## Workflow
 
 When a user adds a plant to their Garden:
@@ -192,7 +190,7 @@ Tasks are stored in Firebase.
 ```
 {
     "userId": 3,
-    "plantID": 2320,
+    "plantApiId": 2320,
     "plantName": "carrot",
     "taskType": "Check soil and water if dry",
     "frequencyDays": 1,
@@ -212,8 +210,8 @@ Garden Buddy:
 
 1. Marks existing task as completed
 2. Records the task completion date
-2. Calculates next due date, using the completion date and task frequency
-3. Generates next recurring task with updated due date
+3. Calculates next due date, using the completion date and task frequency
+4. Generates next recurring task with updated due date
 
 **Completed tasks:** 
 
@@ -284,7 +282,9 @@ flowchart TD
 
 Plant API provides plant name, type, and plant information.
 
-The scheduling system then uses the plant type to determine which care schedule template to apply.
+The scheduling system uses the plant `type` field (returned from the Plant Details endpoint) to determine which care schedule template to apply.
+
+For details of the Perenual API reserach, endpoint testing, available fields, and data considerations, see [Perenual API Research & Endpoint Testing](perenual-api-research.md).
 
 ### Firebase
 
@@ -294,3 +294,74 @@ Firebase stores users, their saved plants, generated tasks, and completed tasks.
 
 The Frontend displays plant information, generated tasks, and task completion status.
 
+
+## Example Firebase Collections and relationships
+
+The MVP scheduling system will use the following Firebase collections:
+
+### Users
+
+Stores user account information.
+
+**Example:**
+
+```
+{
+    "userId": "user1",
+    "email": "user@email.com"
+}
+```
+
+### SavedPlants
+
+Stores plant(s) added to a user's Garden (Dashboard).
+
+**Example:**
+
+```
+{
+    "userId": "user1",
+    "plantApiId": 2320,
+    "commonName": "carrot",
+    "scientificName": "Scientific name",
+    "plantType": "Vegetable",
+    "plantImage": "image-url",
+    "dateAdded": "2026-06-01"
+}
+```
+
+### Tasks
+
+Stores generated care tasks (based on the pre-defined plant care schedules).
+
+**Example:**
+
+```
+{
+    "userId": "user1",
+    "plantApiId": 2320,
+    "taskName": "Check soil and water if dry",
+    "frequencyDays": 1,
+    "dueDate": "2026-06-02",
+    "completed": false,
+    "completedDate": null
+}
+```
+
+### Data relationships
+
+The scheduling system uses three main types of data that are linked together.
+
+```mermaid
+flowchart TD
+    1["User"]
+    2["Saved Plant"]
+    3["Task"]
+
+    1 --> 2
+    2 --> 3
+```
+
+A user can save multiple plants to their Garden, and each saved plant can have multiple generated care tasks.
+
+These records are stored in Firebase and linked together using IDs.
