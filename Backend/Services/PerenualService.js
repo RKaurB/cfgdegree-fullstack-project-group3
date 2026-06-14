@@ -9,6 +9,10 @@ const searchPlants = async (query) => {
         `https://perenual.com/api/v2/species-list?key=${apiKey}&q=${query}`
     )
 
+    // Temp debugging
+    // console.log("Response status:", response.status);
+    // console.log("Response ok:", response.ok);
+
     // Check API request successful
     if (!response.ok) {
         throw new Error(
