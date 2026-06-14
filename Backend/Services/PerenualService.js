@@ -9,6 +9,13 @@ const searchPlants = async (query) => {
         `https://perenual.com/api/v2/species-list?key=${apiKey}&q=${query}`
     )
 
+    // Check API request successful
+    if (!response.ok) {
+        throw new Error(
+            "Unable to retrieve data from Perenual API"
+        );
+    }
+
     // Convert JSON response into JS object
     const data = await response.json();
 
@@ -27,6 +34,13 @@ const getPlantDetails = async(id) => {
     const response = await fetch(
         `https://perenual.com/api/v2/species/details/${id}?key=${apiKey}`
     );
+
+    // Check API request successful
+    if (!response.ok) {
+        throw new Error(
+            "Unable to retrieve data from Perenual API"
+        );
+    }
 
     // Convert JSON response into JS object
     const data = await response.json();
