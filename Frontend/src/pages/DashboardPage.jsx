@@ -21,8 +21,8 @@ function Dashboard() {
   const [plantToDelete, setPlantToDelete] = useState(null);
 
   // Redirecting to care schedule pages
-  const handleView = (id) => {
-    navigate(`/plant/${id}`);
+  const handleView = (plantName) => {
+    navigate(`/schedule?plant=${encodeURIComponent(plantName)}`);
   };
 
   // Display popup and store the target plant object
@@ -64,7 +64,7 @@ function Dashboard() {
             name={plant.name}
             date={plant.date}
             image={plant.image}
-            onView={() => handleView(plant.id)} 
+            onView={() => handleView(plant.name)} 
             // Passing the entire 'plant' object so the app gets both ID and Name
             onDelete={() => openDeleteModal(plant)}
           />
