@@ -11,13 +11,22 @@ The Perenual API provides endpoints for:
 - Searching plants (GET `/v2/species-list`) - we will use this endpoint for the Search page and Search results
 - Retrieving detailed information about a specific plant (GET `/v2/species/details/{id}`) - we will use this endpoint for the Plant details page
 
-This document contains:
 
-- Research findings
-- Endpoint testing results
-- Data quality observations and API limitations
-- Proposed Garden Buddy Backend endpoints
-- Notes on integrating scheduling and task generation
+## Table of Contents
+
+- [Application architecture](#application-architecture)
+- [User journey / workflow](#user-journey--workflow)
+- [Endpoint 1: Plant Search](#endpoint-1-plant-search)
+- [Endpoint 2: Plant Details](#endpoint-2-plant-details)
+- [Optional Endpoint 3: Species Care Guide](#optional-endpoint-3-species-care-guide)
+- [Proposed MVP data fields / UI usage](#proposed-mvp-data-fields--ui-usage)
+- [Notes & Limitations](#notes--limitations)
+- [Conclusion](#conclusion)
+- [Appendices](#appendices)
+    - [Appendix A - API Setup](#appendix-a---api-setup)
+    - [Appendix B - Tested plant search terms](#appendix-b---tested-plant-search-terms)
+    - [Appendix C - Tested plant details (IDs)](#appendix-c---tested-plant-details-ids)
+    - [Appendix D - Optional Endpoint 3: Species Care Guide](#appendix-d---optional-endpoint-3-species-care-guide)
 
 
 ## Application architecture
