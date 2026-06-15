@@ -1,0 +1,7 @@
+class GeneralPlantType{
+    constructor(){
+
+    }
+
+    
+}

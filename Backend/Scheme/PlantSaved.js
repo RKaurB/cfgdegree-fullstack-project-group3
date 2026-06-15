@@ -1,14 +1,14 @@
-const {FirebaseDB} = require("../Firebase.js")
-class PlantSaved{
+const {FirebaseDB} = require("../Database/Firebase.js")
+const {Scheme} = require("./Scheme.js")
+class PlantSaved extends Scheme{
     constructor(){
-        this.firebase = new FirebaseDB()
+        super(["userId","plantId","plantName","scientificName","imageURL","plantType",]);
         this.tablename = "PlantSaved"
-        this.fields = ["userId","plantId","plantName","scientificName","imageURL","plantType",]
     }
 
     async AddNewDocument(props){
         try{
-            if(!this.#checkIfParameterAvailable(props)){
+            if(!super.checkIfParameterAvailable(props)){
                 return {
 
                     status : 400,
@@ -16,17 +16,8 @@ class PlantSaved{
                 }
             }
 
-            let res = await this.firebase.AddDataToCollection(this.tablename,props);
-            if(!res.successful){
-                return{
-                    status : 500,
-                    message: res?.error
-                }
-            }
-            return{
-                status:200,
-                data: res?.data
-            }
+            let res = await super.firebase.AddDataToCollection(this.tablename,props);
+            return res;
         }catch(error){
             return{
                     status : 500,
@@ -39,7 +30,7 @@ class PlantSaved{
 
     async GetCurrentUserSavedPlantList(){
         try{
-            let res = await this.firebase.GetCollectionThatContainCurrentUser(this.tablename)
+            let res = await super.firebase.GetCollectionThatContainCurrentUser(this.tablename)
             return res;
         }
         catch(error){
@@ -51,19 +42,16 @@ class PlantSaved{
     }
     async RemoveItemPlantList(plantID){
         try{
-             let res = await this.firebase.RemoveDocumentFromCollection(this.tablename,plantID)
+             let res = await super.firebase.RemoveDocumentFromCollection(this.tablename,plantID)
+             return res
         }catch(error){
+            return {
+                status:500,
+                message: error,
+            }
 
         }
 
-    }
-
-    #checkIfParameterAvailable(obj) {
-        for (let i = 0; i < this.fields.length; i++) {
-            if (obj?.[this.fields[i]] == null || obj?.[this.fields[i]] == "") return false;
-        }
-
-        return true;
     }
 }
 

@@ -88,13 +88,13 @@ dotenv.config()
         try{
             const res = await await addDoc(collection(this.#db,tablename),data)
             return { 
-                successful:true,
+                status:200,
                 data:res,
             }
         }
         catch(error){
             return {
-                successful:false,
+                status:500,
                 error: error
             }
         }
@@ -107,7 +107,7 @@ dotenv.config()
             const user = await this.#auth.currentUser.uid
             if(user == null) {
                 return {
-                    staatus:404,
+                    status:404,
                     error:"You are not login in"
                 }
             }
@@ -120,7 +120,7 @@ dotenv.config()
             }
         }catch(error){
             return{
-                statas: 500,
+                status: 500,
                 error: error
             }
         }
@@ -138,7 +138,7 @@ dotenv.config()
             }
         }catch(error){
             return{
-                statas: 500,
+                status: 500,
                 error: error
             }
         }

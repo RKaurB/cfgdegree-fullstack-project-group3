@@ -1,5 +1,5 @@
 const {Account} = require("./Auth/Account")
-const {PlantSaved} = require("./Database/Scheme/PlantSaved")
+const {PlantSaved} = require("./Scheme/PlantSaved")
 let account = new Account(); 
 let plantSaved = new PlantSaved()
 
@@ -21,7 +21,7 @@ account.LoginIn("test12@gi.com","G/2%,J];Muge<<8M").then((res)=>{
     console.log(res1)
 
    })&*/
-
+   Just
    plantSaved.GetCurrentUserSavedPlantList().then((res1)=>{
     res1.data.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
