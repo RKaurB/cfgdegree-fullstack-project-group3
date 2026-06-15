@@ -16,5 +16,25 @@ const searchPlants = async (query) => {
 
 }
 
+
+// Get detailed info for a specific plant
+const getPlantDetails = async(id) => {
+
+    // Get API key from .env
+    const apiKey = process.env.PERENUAL_API_KEY;
+
+    // Send GET request to Perenual details endpoint
+    const response = await fetch(
+        `https://perenual.com/api/v2/species/details/${id}?key=${apiKey}`
+    );
+
+    // Convert JSON response into JS object
+    const data = await response.json();
+
+    return data;
+
+}
+
+
 // Export function
-module.exports = { searchPlants };
+module.exports = { searchPlants, getPlantDetails };
