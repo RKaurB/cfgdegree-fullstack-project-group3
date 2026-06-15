@@ -28,6 +28,8 @@ export default function PlantCardComponent({
       >
         View
       </button>
+
+      {/* Calling onDelete prop */}
        <button 
         className={styles.deleteButton} 
         onClick={onDelete} 
