@@ -4,9 +4,9 @@ const { getAuth,
         signInWithEmailAndPassword,
         signOut,
         updateProfile,
-        deleteUser
+        deleteUser,
 } = require('firebase/auth')
-const { getFirestore, collection, getDocs } = require('firebase/firestore/lite')
+const { getFirestore,collection, getDocs,addDoc, query,where,deleteDoc } = require('firebase/firestore/lite')
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -83,6 +83,68 @@ dotenv.config()
         
     }
     //////Collection
+
+    async AddDataToCollection(tablename, data){
+        try{
+            const res = await await addDoc(collection(this.#db,tablename),data)
+            return { 
+                successful:true,
+                data:res,
+            }
+        }
+        catch(error){
+            return {
+                successful:false,
+                error: error
+            }
+        }
+        
+    }
+
+    async GetCollectionThatContainCurrentUser(tablename){
+        try{
+            const col = collection(this.#db,tablename);
+            const user = await this.#auth.currentUser.uid
+            if(user == null) {
+                return {
+                    staatus:404,
+                    error:"You are not login in"
+                }
+            }
+            //query(citiesRef, where("state", "==", "CA"));
+            let q =  query(col,where("userId","==",`${user}`))
+            const querySnapshot = await getDocs(q);
+            return {
+                status:200,
+                data: querySnapshot,
+            }
+        }catch(error){
+            return{
+                statas: 500,
+                error: error
+            }
+        }
+
+
+
+    }
+
+    async RemoveDocumentFromCollection(tablename,ID){
+        try{
+            let res = await deleteDoc(doc(db,tablename, ID));
+            return {
+                status:200,
+                data: "Delete Successful",
+            }
+        }catch(error){
+            return{
+                statas: 500,
+                error: error
+            }
+        }
+    }
+
+    
             
 }
 module.exports = {FirebaseDB}
