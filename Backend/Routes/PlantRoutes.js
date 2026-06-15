@@ -7,11 +7,15 @@ const router = express.Router();
 // Import PlantService functions
 const { searchPlants, getPlantDetails } = require("../Services/PlantService");
 
-router.get("/search", async(req, res) => {
+// GET /api/plants/search?q=carrot
+// Searches plants using query (search term) input by User
+// (e.g. http://localhost:3000/api/plants/search?q=carrot)
+router.get("/search", async (req, res) => {
 
     try {
 
-        // Read query parameter from URL, e.g. /search?q=carrot)
+        // Extract search term from URL query parameter 
+        // (e.g. /api/plants/search?q=carrot)
         const searchTerm = req.query.q;
 
         // Search term must be provided
@@ -34,6 +38,31 @@ router.get("/search", async(req, res) => {
 
 });
 
+
+// GET /api/plants/:id
+// Returns details for the User's selected plant
+// (e.g. http://localhost:3000/api/plants/2320)
+router.get("/:id", async (req, res) => {
+
+    try {
+
+        // Extract ID from URL (e.g. /api/plants/2320)
+        const plantId = req.params.id;
+
+        // Call PlantService
+        const plant = await getPlantDetails(plantId);
+
+        // Return plant data
+        res.status(200).json(plant);
+
+    } catch (error) {
+
+        console.error(error);
+        res.status(500).json({message: "Failed to retrieve plant details"});
+
+    }
+
+});
 
 
 module.exports = router;
