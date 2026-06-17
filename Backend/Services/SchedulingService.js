@@ -71,3 +71,13 @@ function getTemplate (plantType){
 // test getTemplate function
 // console.log(getTemplate("Herb"))
 // console.log(getTemplate("Plant"))
+
+// Function to calculate task due date
+function calculateDueDate (dateAdded, frequencyDays){
+      const dueDate = new Date(dateAdded);
+      dueDate.setDate(dueDate.getDate() + frequencyDays)
+      return dueDate.toISOString().split("T")[0]
+};
+// test calculateDueDate function
+// console.log(calculateDueDate("2026-06-01", 5));
+
