@@ -61,7 +61,7 @@ const templates = {
 
 // Function get template
 
-Function getTemplate (plantType){
+function getTemplate (plantType){
     if (templates[plantType]){
         return templates[plantType]
     }
