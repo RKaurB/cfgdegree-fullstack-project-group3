@@ -67,3 +67,7 @@ function getTemplate (plantType){
     }
         return templates.GeneralPlant
 };
+
+// test getTemplate function
+// console.log(getTemplate("Herb"))
+// console.log(getTemplate("Plant"))
