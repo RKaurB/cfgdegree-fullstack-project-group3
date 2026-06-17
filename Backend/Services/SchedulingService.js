@@ -58,3 +58,12 @@ const templates = {
         }
     ],
 }
+
+// Function get template
+
+Function getTemplate (plantType){
+    if (templates[plantType]){
+        return templates[plantType]
+    }
+        return templates.GeneralPlant
+};
