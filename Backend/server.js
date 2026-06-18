@@ -1,9 +1,13 @@
 require("dotenv").config();
 const express = require("express")
 const {Account} = require("./Auth/Account")
+// Import Plant API routes
+const plantRoutes = require("./Routes/PlantRoutes");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// All plant endpoints start with /api/plants - handled by PlantRoutes.js
+app.use("/api/plants", plantRoutes);
 const account = new Account();
 app.post("/login", async (req,res)=>{
     const fieldInput  =  ["email","password"];
