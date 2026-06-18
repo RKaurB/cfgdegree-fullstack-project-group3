@@ -55,7 +55,7 @@ class Task extends Scheme{
 
     async DeleteCurrentUserAllSavedPlantTasks(plantID){
         try{
-         let res = await this.firebase.RemoveMulipleDocFromCollection(this.tablename,where("plantId","==",plantName))
+         let res = await this.firebase.RemoveMulipleDocFromCollection(this.tablename,where("savedPlantID","==",plantID))
          return res;
          }catch(error){
             return {

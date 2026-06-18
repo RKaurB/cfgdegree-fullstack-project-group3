@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: '../.env' });
 const express = require("express")
 const {Account} = require("./Auth/Account")
 // Import Plant API routes
@@ -45,12 +45,12 @@ function checkIfParameterAvailable(obj, field) {
   return true;
 }
 
-app.listen(3000,(err) => {
+app.listen(process.env.BACKEND_PORT,(err) => {
   if (err) {
     console.log(err);
     return;
   }
-  console.log(`Listen At PORT 3000`);
+  console.log(`Listen At PORT ${process.env.BACKEND_PORT}`);
 });
 
 
