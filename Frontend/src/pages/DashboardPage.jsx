@@ -12,7 +12,8 @@ function Dashboard() {
   const userName = "User"; 
 
   // Added local state to hold data 
-  const [plants, setPlants] = useState(mockPlants);
+  const [plants, setPlants] = useState([]); 
+  // const [plants, setPlants] = useState(mockPlants); uncomment here to get the mock data plant
 
   // Modal visibility states (visible popup)
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,6 +58,23 @@ function Dashboard() {
         </button>
       </div>
 
+      {/* Empty state logic */}
+      {plants.length === 0 ? (
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>🪴</div>
+          <h4 className={styles.emptyTitle}>Your Garden is Empty</h4>
+          <p className={styles.emptyText}>
+            You haven't saved any plants yet. Start adding plants to track your gardening journey!
+          </p>
+          <button 
+            className={styles.emptyButton}
+            onClick={() => navigate("/search")}
+          >
+            Add Your First Plant
+          </button>
+        </div>
+      ) : (
+
       <div className={styles.grid}>
         {plants.map((plant) => (
           <PlantCard
@@ -70,6 +88,7 @@ function Dashboard() {
           />
         ))}
       </div>
+      )}
       
       {/* Popup box for delete confirmation */}
       {isModalOpen && plantToDelete && (

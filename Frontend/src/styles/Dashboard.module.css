@@ -8,7 +8,7 @@
 
 .title {
   text-align: center;
-  color: var(--color-dark-green);
+  color: var(--color-cream);
   margin-bottom: 1.5rem;
   font-size: 2.5rem;
 }
@@ -62,6 +62,64 @@
   padding: 1rem 0;
 }
 
+/* EMpty state  */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background-color: var(--color-cream, #f5f5dc); /* Sekata dengan tema Welcome Bar */
+  border: 2px dashed rgba(27, 94, 32, 0.2); /* Border putus-putus hijau lembut */
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 2rem auto 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.emptyIcon {
+  font-size: 4.5rem;
+  margin-bottom: 1rem;
+  animation: floatAnimation 3s ease-in-out infinite; /* Kesan terapung magis */
+}
+
+.emptyTitle {
+  font-size: 1.4rem;
+  color: var(--color-dark-green, #1b5e20);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.emptyText {
+  font-size: 0.95rem;
+  color: #555555;
+  max-width: 380px;
+  margin-bottom: 1.8rem;
+  line-height: 1.6;
+}
+
+.emptyButton {
+  background-color: var(--color-dark-green, #1b5e20);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.emptyButton:hover {
+  background-color: #113b14; /* Hijau lebih pekat sedikit */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Popup modal delete */
 .container .modalOverlay {
   position: fixed;
   top: 0;
