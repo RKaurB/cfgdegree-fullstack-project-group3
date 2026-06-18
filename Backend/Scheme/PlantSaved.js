@@ -2,7 +2,7 @@ const {Scheme} = require("./Scheme.js")
 const {where,and, documentId } = require('firebase/firestore/lite')
 class PlantSaved extends Scheme{
     constructor(){
-        super(["userId","plantId","plantName","scientificName","imageURL","plantType",]);
+        super(["userId","plantApiId","commonName","scientificName","imageURL","plantType","dateAdded"]);
         this.tablename = "PlantSaved"
     }
 
