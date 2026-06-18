@@ -81,3 +81,10 @@ function calculateDueDate (dateAdded, frequencyDays){
 // test calculateDueDate function
 // console.log(calculateDueDate("2026-06-01", 5));
 
+// Generate initial care tasks 
+function generateTasks (plant, dateAdded){
+    const template = getTemplate(plant)
+    return template   
+};
+// test generateTasks function
+//  console.log(generateTasks("Vegetable"))
