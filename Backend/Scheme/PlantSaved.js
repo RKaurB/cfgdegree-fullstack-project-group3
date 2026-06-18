@@ -1,5 +1,5 @@
-const {FirebaseDB} = require("../Database/Firebase.js")
 const {Scheme} = require("./Scheme.js")
+const {where,and, documentId } = require('firebase/firestore/lite')
 class PlantSaved extends Scheme{
     constructor(){
         super(["userId","plantId","plantName","scientificName","imageURL","plantType",]);
@@ -7,42 +7,39 @@ class PlantSaved extends Scheme{
     }
 
     async AddNewDocument(props){
-        try{
-            if(!super.checkIfParameterAvailable(props)){
-                return {
 
-                    status : 400,
-                    message: "Missing Fields"
-                }
-            }
-
-            let res = await super.firebase.AddDataToCollection(this.tablename,props);
-            return res;
-        }catch(error){
-            return{
-                    status : 500,
-                    message: error
-            }
-        }
-
+        let res = await super.AddNewDocument(props,this.tablename)
+        return res;
         
     }
 
     async GetCurrentUserSavedPlantList(){
         try{
-            let res = await super.firebase.GetCollectionThatContainCurrentUser(this.tablename)
+            let res = await this.firebase.GetCollectionThatContainCurrentUser(this.tablename)
             return res;
         }
         catch(error){
             return {
                 status:500,
-                message: error,
+                error: error,
+            }
+        }
+    }
+    async GetCurrentUserSingleSavePlant(ID){
+        try{
+            let res = await this.firebase.GetCollectionThatContainCurrentUserWithCustomQuery(this.tablename,where(documentId(),"==",ID))
+            return res;
+        }
+        catch(error){
+            return {
+                status:500,
+                error: error,
             }
         }
     }
     async RemoveItemPlantList(plantID){
         try{
-             let res = await super.firebase.RemoveDocumentFromCollection(this.tablename,plantID)
+             let res = await this.firebase.RemoveDocumentFromCollection(this.tablename,plantID)
              return res
         }catch(error){
             return {

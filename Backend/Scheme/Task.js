@@ -1,30 +1,71 @@
 const {Scheme} = require("./Scheme")
+const {where,and, Timestamp} = require('firebase/firestore/lite')
 class Task extends Scheme{
     constructor(){
-        super([])
-        this.tablename = Task
+        super(["userId","savedPlantID","commonName","frequencyDay","dueDate","completed","completedDate","createdDate"])
+        this.tablename = "Task"
     }
     
     async AddNewDocument(props){
-            try{
-                if(!super.checkIfParameterAvailable(props)){
-                    return {
-
-                        status : 400,
-                        message: "Missing Fields"
-                    }
-                }
-
-                let res = await super.firebase.AddDataToCollection(this.tablename,props);
-                return res;
-            }catch(error){
-                return{
-                        status : 500,
-                        message: error
-                }
-            }
-
-        
+        let res = await super.AddNewDocument(props,this.tablename)
+        return res;
     }
+
+    async GetCurrentUserTaskList(){
+         try{
+            let res = await this.firebase.GetCollectionThatContainCurrentUser(this.tablename)
+            return res;
+        }
+        catch(error){
+            return {
+                status:500,
+                error: error,
+            }
+        }
+    }
+    async GetCurrentUserListWithActiveOrComplete(completed){
+        try{
+             let res = await this.firebase.GetCollectionThatContainCurrentUserWithCustomQuery(this.tablename,where("completed","==",completed))
+        }
+        catch(error){
+            return {
+                status:500,
+                error: error,
+            }
+        }
+    }
+    async UpdateCurrentUserTaskForCompletion(plantTaskID, completedValue){
+        try{
+            let date = null
+            if(completedValue == true) date = Timestamp.now()
+            let props ={
+                complete : completedValue,
+                completeDate: date                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            }
+            let res = await this.firebase.UpdateDocumentFromCollection(this.tablename,plantTaskID,props)
+            return res;
+
+        }catch(error){
+            return {
+                status:500,
+                error: error,
+            }
+        }
+    }
+
+    async DeleteCurrentUserAllSavedPlantTasks(plantID){
+        try{
+         let res = await this.firebase.RemoveMulipleDocFromCollection(this.tablename,where("plantId","==",plantName))
+         return res;
+         }catch(error){
+            return {
+                status:500,
+                error: error,
+            }
+        }
+    }
+    
+
+    
 
 }

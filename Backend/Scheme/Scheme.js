@@ -4,6 +4,27 @@ class Scheme{
         this.firebase = new FirebaseDB()
         this.fields = fields;
     }
+    async AddNewDocument(props,tablename){
+            try{
+                if(!this.checkIfParameterAvailable(props)){
+                    return {
+
+                        status : 400,
+                        message: "Missing Fields"
+                    }
+                }
+
+                let res = await this.firebase.AddDataToCollection(tablename,props);
+                return res;
+            }catch(error){
+                return{
+                        status : 500,
+                        message: error
+                }
+            }
+
+        
+    }
 
     checkIfParameterAvailable(obj) {
         for (let i = 0; i < this.fields.length; i++) {
