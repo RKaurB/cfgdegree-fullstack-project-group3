@@ -1,7 +1,12 @@
 import Button from "../components/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLeaf, faSeedling, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
-
+ let url = "http://localhost:3000/"
+async function Login(){
+ 
+  let fullUrl = `${url}/login`
+  let res = await fetch(fullUrl);
+}
 function LandingPage() {
   return (
     <div className="p-4">

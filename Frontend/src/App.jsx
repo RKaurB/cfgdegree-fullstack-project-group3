@@ -5,9 +5,11 @@ import LandingPage from './pages/LandingPage'
 import DashboardPage from './pages/DashboardPage'
 import SchedulePage from './pages/SchedulePage'
 import SearchPage from './pages/SearchPage'
+import
 
 function App(){
-  return (<BrowserRouter>
+  return (
+  <BrowserRouter>
   <NavBar></NavBar>
   <Routes>
     <Route path="/" element={<LandingPage />} />
