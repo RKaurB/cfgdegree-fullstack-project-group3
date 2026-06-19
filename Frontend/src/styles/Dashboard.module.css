@@ -1,0 +1,129 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 16px; 
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  color: var(--color-dark-green);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.welcomeBar {
+  background: var(--color-cream);
+  color: var(--color-dark-green);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.welcomeText {
+  font-size: 1.15rem; 
+  font-weight: 500; 
+  color: var(--color-dark-green);
+}
+
+.highlightUser{
+  font-weight: 800;
+  color: #2c3e23;
+  padding: 0 4px;
+}
+
+.addButton {
+  background: var(--color-dark-green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background: var(--color-light-green);
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(220px, 1fr)
+  );
+
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.container .modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* z-index tinggi sudah cukup tanpa !important */
+}
+
+.container .modalBox {
+  background-color: #FFF8EC;
+  border: 2px solid var(--color-dark-green);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  width: 85%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.container .modalTitle {
+  color: var(--color-dark-green);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+}
+
+.container .modalText {
+  color: #444;
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
+}
+
+.container .modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.container .cancelButton {
+  border: 1px solid var(--color-dark-green);
+  border-radius: 50px;
+  background-color: transparent;
+  color: var(--color-dark-green);
+  padding: 0.6rem 1.6rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.container .confirmButton {
+  border: none;
+  border-radius: 50px;
+  background-color: #ba3c3c;
+  color: white;
+  padding: 0.6rem 1.6rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
