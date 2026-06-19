@@ -89,7 +89,7 @@ dotenv.config()
 
     async AddDataToCollection(tablename, data){
         try{
-            const res = await await addDoc(collection(this.#db,tablename),data)
+            const res = await addDoc(collection(this.#db,tablename),data)
             return { 
                 status:200,
                 data:res,
