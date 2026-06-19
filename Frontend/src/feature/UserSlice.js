@@ -17,5 +17,5 @@ const userSlice = createSlice({
     }
 })
 
-export const {updateUserInfo,clearCart} = cartSlice.action
+export const {updateUserInfo,clearUserInfo} = userSlice.actions
 export default userSlice.reducer

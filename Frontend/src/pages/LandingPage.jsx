@@ -1,13 +1,60 @@
 import Button from "../components/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from "react-router-dom";
 import { faLeaf, faSeedling, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
- let url = "http://localhost:3000/"
-async function Login(){
- 
-  let fullUrl = `${url}/login`
-  let res = await fetch(fullUrl);
-}
+import { useDispatch } from "react-redux";
+import {updateUserInfo} from "../feature/UserSlice"
+let url = "http://localhost:3000/"
+
+
 function LandingPage() {
+  const dispatch = useDispatch()
+  const nav = useNavigate()
+  async function Login(email,pass){
+    let fullUrl = `${url}login`
+      let res = await fetch(fullUrl,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          email:email,
+          password:pass
+        })
+      }
+    );
+    return res;
+  }
+  async function handleSubmitLogin(e){
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      Login(formData.get("email"),formData.get("password")).then(async (res)=>{
+        let data = await res.json()
+        console.log(data)
+        if(res.status == 200){
+          
+          let input ={
+            email:data.email,
+            id: data.UID,
+            username:data.name
+          }
+          dispatch(updateUserInfo(input))
+          alert("Login Successfull")
+          nav("/dashboard")
+          return
+
+        }
+        alert("Login Failed")
+
+      });
+
+  }
+
+
+
+
+
+
   return (
     <div className="p-4">
       <div className="hero">
@@ -43,7 +90,7 @@ function LandingPage() {
       <div className="container" id="auth-section">
         <div className="row mt-5 justify-content-center">
           <div className="col auth-form h-100">
-            <form>
+            <form onSubmit={handleSubmitLogin}>
                 <h2>Login</h2>
                 <label>Email</label>
                 <input

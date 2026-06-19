@@ -5,19 +5,22 @@ import LandingPage from './pages/LandingPage'
 import DashboardPage from './pages/DashboardPage'
 import SchedulePage from './pages/SchedulePage'
 import SearchPage from './pages/SearchPage'
-import
+import {Provider} from 'react-redux'
+import { store } from './Store'
 
 function App(){
   return (
-  <BrowserRouter>
-  <NavBar></NavBar>
-  <Routes>
-    <Route path="/" element={<LandingPage />} />
-    <Route path="/schedule" element={<SchedulePage />} />
-    <Route path="/search" element={<SearchPage />} />
-    <Route path="/dashboard" element={<DashboardPage />} />
-  </Routes>
-  <Footer></Footer>
-  </BrowserRouter>)
+  <Provider store={store}>
+    <BrowserRouter>
+      <NavBar></NavBar>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Routes>
+      <Footer></Footer>
+    </BrowserRouter>
+  </Provider>)
 }
 export default App
