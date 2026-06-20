@@ -4,9 +4,9 @@ const { getAuth,
         signInWithEmailAndPassword,
         signOut,
         updateProfile,
-        deleteUser
+        deleteUser,
 } = require('firebase/auth')
-const { getFirestore, collection, getDocs } = require('firebase/firestore/lite')
+const { getFirestore,collection, getDocs,addDoc, query,where,deleteDoc,doc,updateDoc,and, limit } = require('firebase/firestore/lite')
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -76,13 +76,137 @@ dotenv.config()
     async DeleteCurrentUser(){
         const user = this.#auth.currentUser;
         try{
-            deleteUser(user)
+            await deleteUser(user)
         }catch(error){
-
+           return  {
+            errorCode: error?.code,
+            errorMessage:error?.message
+        }
         }
         
     }
     //////Collection
+
+    async AddDataToCollection(tablename, data){
+        try{
+            const res = await addDoc(collection(this.#db,tablename),data)
+            return { 
+                status:200,
+                data:res,
+            }
+        }
+        catch(error){
+            return {
+                status:500,
+                error: error
+            }
+        }
+        
+    }
+
+    async GetCollectionThatContainCurrentUser(tablename){
+        try{
+            const col = collection(this.#db,tablename);
+            const user = await this.#auth.currentUser.uid
+            if(user == null) {
+                return {
+                    status:404,
+                    error:"You are not login in"
+                }
+            }
+            //query(citiesRef, where("state", "==", "CA"));
+            let q =  query(col,where("userId","==",`${user}`))
+            const querySnapshot = await getDocs(q);
+            return {
+                status:200,
+                data: querySnapshot,
+            }
+        }catch(error){
+            return{
+                status: 500,
+                error: error
+            }
+        }
+
+    }
+
+    async GetCollectionThatContainCurrentUserWithCustomQuery(tablename,custom){
+        try{
+            const col = collection(this.#db,tablename);
+            const user = await this.#auth.currentUser.uid
+            if(user == null) {
+                return {
+                    status:404,
+                    error:"You are not login in"
+                }
+            }
+            //query(citiesRef, where("state", "==", "CA"));
+            let q =  query(col,and(where("userId","==",`${user}`),custom))
+            const querySnapshot = await getDocs(q);
+            return {
+                status:200,
+                data: querySnapshot,
+            }
+        }catch(error){
+            return{
+                status: 500,
+                error: error
+            }
+        }
+    }
+
+    async RemoveDocumentFromCollection(tablename,ID){
+        try{
+            let res = await deleteDoc(doc(this.#db,tablename, ID));
+            return {
+                status:200,
+                data: "Delete Successful",
+            }
+        }catch(error){
+            return{
+                status: 500,
+                error: error
+            }
+        }
+    }
+    async RemoveMulipleDocFromCollection(tablename,custom){
+        try{
+            let res = await this.GetCollectionThatContainCurrentUserWithCustomQuery(tablename,custom)
+            if(res.status != 200){
+                return res;
+            }
+            for (const item of res.data || []) {
+                await deleteDoc(doc(this.#db, tablename, item.id));
+            }
+            return{
+                status:200,
+                message:"Delete Successful"
+            }
+        }catch(error){
+            return{
+                status: 500,
+                error: error.message || error
+            }
+        }
+    }
+
+    async UpdateDocumentFromCollection(tablename,ID,props){
+        try{
+
+            let res = await updateDoc(doc(this.#db,tablename,ID),props)
+            return {
+                status:200,
+                data: "Delete Successful",
+            }
+        }catch(error){
+            return{
+                status: 500,
+                error: error
+            }
+        }
+    }
+
+    
             
 }
 module.exports = {FirebaseDB}
