@@ -21,12 +21,8 @@ account.LoginIn("test12@gi.com","G/2%,J];Muge<<8M").then((res)=>{
     console.log(res1)
 
    })*/
-  plantSaved.GetCurrentUserSingleSavePlant("Opblvdq8Ir0865kb3dQH").then((res1)=>{
-      console.log(res1)
-    res1.data.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
+  plantSaved.GetCurrentUserSavedPlantList().then((res1)=>{
+    console.log(res1.data)
 })
 }).catch((error)=>{
     console.log(error)
