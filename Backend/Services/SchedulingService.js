@@ -1,6 +1,9 @@
 // ======================================
-// create templates for each plant type
+// Plant care templates
 // ======================================
+
+// Each plant type has a predefined care template.
+// Each template contains tasks and how often they should be completed.
 
 const templates = {
     Herb: [
@@ -63,45 +66,43 @@ const templates = {
 
 
 // ======================================
-// Function to get template
+// Select care template
 // ======================================
 
-function getTemplate (plantType){
+// Selects the appropriate care template based on plant type
+// If no matching template exists, GeneralPlant is used as a fallback template
+function getTemplate (plantType) {
+
     if (templates[plantType]){
         return templates[plantType]
     }
-        return templates.GeneralPlant
+    
+    return templates.GeneralPlant
+
 };
 
-// test getTemplate function
-// console.log(getTemplate("Herb"))
-// console.log(getTemplate("Plant"))
-
 
 // ======================================
-// Function to calculate task due date
+// Calculate due date
 // ======================================
 
-function calculateDueDate (dateAdded, frequencyDays){
+// Calculates task due date, by adding frequencyDays to the date the task was created
+function calculateDueDate (dateAdded, frequencyDays) {
+
       const dueDate = new Date(dateAdded);
-      dueDate.setDate(dueDate.getDate() + frequencyDays)
-      return dueDate.toISOString().split("T")[0]
+
+      dueDate.setDate(dueDate.getDate() + frequencyDays);
+
+      return dueDate.toISOString().split("T")[0];
+      
 };
-// test calculateDueDate function
-// console.log(calculateDueDate("2026-06-01", 5));
 
 
 // ======================================
 // Generate initial care tasks 
 // ======================================
 
-/* Tested step by step:
-   - template selection
-   - due date calculation
-   - task generation
-   - task array creation */
-
-// Generates task objects ready for Firebase storage
+// Generates initial task objects ready for Firebase storage (when  plant is added to User's garden)
 function generateTasks (plant, dateAdded){
 
     // Select correct template
@@ -109,18 +110,6 @@ function generateTasks (plant, dateAdded){
 
     // Array to store tasks
     const generatedTasks = [];
-
-    // // Test task
-    // const generatedTask = {
-    //     // Plant name
-    //     commonName: plant.commonName,
-    //     // First task in template
-    //     taskName: template[0].taskName,
-    //     // First task frequency
-    //     frequencyDays: template[0].frequencyDays,
-    //     // Calculate due date
-    //     dueDate: calculateDueDate(dateAdded, template[0].frequencyDays)
-    // }
 
     // Loop through every task in template
     for (const task of template) {
@@ -140,30 +129,16 @@ function generateTasks (plant, dateAdded){
         generatedTasks.push(generatedTask);
     }
 
-    // return template;   
     return generatedTasks;
-    // return generatedTask;
 
 };
-
-
-// // Test generateTasks function
-// const carrot = {
-//     commonName: "carrot",
-//     type: "Vegetable"
-// }
-//  console.log(generateTasks(carrot, "2026-06-01"));
 
 
 // ======================================
 // Generate next task
 // ======================================
 
-/* Tested:
-   - due date calculation
-   - recurring task creation */
-
-// Generates next recurring task object, ready for FB storage
+// Generates next recurring task object ready for Firebase storage, when existing task is marked as completed
 function generateNextTask(task, completedDate) {
 
     // Copy task into nextTask
@@ -179,16 +154,14 @@ function generateNextTask(task, completedDate) {
         createdDate: completedDate
     }
 
-    // return task
-
     return nextTask;
 }
 
-// // Test
-// const task = {
-//     commonName: "carrot",
-//     taskName: "Check soil and water if dry",
-//     frequencyDays: 1
-// }
 
-// console.log(generateNextTask(task, "2026-06-02"));
+// Export functions
+module.exports = {
+    getTemplate,
+    calculateDueDate,
+    generateTasks,
+    generateNextTask
+}
