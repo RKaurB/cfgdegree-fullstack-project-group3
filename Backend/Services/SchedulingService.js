@@ -1,4 +1,6 @@
+// ======================================
 // create templates for each plant type
+// ======================================
 
 const templates = {
     Herb: [
@@ -59,7 +61,10 @@ const templates = {
     ],
 }
 
-// Function get template
+
+// ======================================
+// Function to get template
+// ======================================
 
 function getTemplate (plantType){
     if (templates[plantType]){
@@ -72,7 +77,11 @@ function getTemplate (plantType){
 // console.log(getTemplate("Herb"))
 // console.log(getTemplate("Plant"))
 
+
+// ======================================
 // Function to calculate task due date
+// ======================================
+
 function calculateDueDate (dateAdded, frequencyDays){
       const dueDate = new Date(dateAdded);
       dueDate.setDate(dueDate.getDate() + frequencyDays)
@@ -81,10 +90,66 @@ function calculateDueDate (dateAdded, frequencyDays){
 // test calculateDueDate function
 // console.log(calculateDueDate("2026-06-01", 5));
 
+
+// ======================================
 // Generate initial care tasks 
+// ======================================
+
+/* Tested step by step:
+   - template selection
+   - due date calculation
+   - task generation
+   - task array creation */
+
+// Generates task objects ready for Firebase storage
 function generateTasks (plant, dateAdded){
-    const template = getTemplate(plant)
-    return template   
+
+    // Select correct template
+    const template = getTemplate(plant.type);
+
+    // Array to store tasks
+    const generatedTasks = [];
+
+    // // Test task
+    // const generatedTask = {
+    //     // Plant name
+    //     commonName: plant.commonName,
+    //     // First task in template
+    //     taskName: template[0].taskName,
+    //     // First task frequency
+    //     frequencyDays: template[0].frequencyDays,
+    //     // Calculate due date
+    //     dueDate: calculateDueDate(dateAdded, template[0].frequencyDays)
+    // }
+
+    // Loop through every task in template
+    for (const task of template) {
+        const generatedTask = {
+            commonName: plant.commonName,
+            taskName: task.taskName,
+            frequencyDays: task.frequencyDays,
+            dueDate: calculateDueDate(dateAdded, task.frequencyDays),
+            // Add FB Task structure fields
+            // New tasks start as false because not been done yet
+            completed: false,
+            completedDate: null,
+            createdDate: dateAdded
+        }
+
+        // Add task to the generatedTasks array
+        generatedTasks.push(generatedTask);
+    }
+
+    // return template;   
+    return generatedTasks;
+    // return generatedTask;
+
 };
-// test generateTasks function
-//  console.log(generateTasks("Vegetable"))
+
+
+// // Test generateTasks function
+// const carrot = {
+//     commonName: "carrot",
+//     type: "Vegetable"
+// }
+//  console.log(generateTasks(carrot, "2026-06-01"));
