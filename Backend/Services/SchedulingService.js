@@ -153,3 +153,42 @@ function generateTasks (plant, dateAdded){
 //     type: "Vegetable"
 // }
 //  console.log(generateTasks(carrot, "2026-06-01"));
+
+
+// ======================================
+// Generate next task
+// ======================================
+
+/* Tested:
+   - due date calculation
+   - recurring task creation */
+
+// Generates next recurring task object, ready for FB storage
+function generateNextTask(task, completedDate) {
+
+    // Copy task into nextTask
+    const nextTask = {
+        commonName: task.commonName,
+        taskName: task.taskName,
+        frequencyDays: task.frequencyDays,
+        // Add new due date
+        dueDate: calculateDueDate(completedDate, task.frequencyDays),
+        // New task, so starts as false
+        completed: false,
+        completedDate: null,
+        createdDate: completedDate
+    }
+
+    // return task
+
+    return nextTask;
+}
+
+// // Test
+// const task = {
+//     commonName: "carrot",
+//     taskName: "Check soil and water if dry",
+//     frequencyDays: 1
+// }
+
+// console.log(generateNextTask(task, "2026-06-02"));
