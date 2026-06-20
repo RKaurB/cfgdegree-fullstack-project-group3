@@ -2,7 +2,7 @@ const {Scheme} = require("./Scheme")
 const {where,and, Timestamp} = require('firebase/firestore/lite')
 class Task extends Scheme{
     constructor(){
-        super(["userId","savedPlantID","commonName","frequencyDay","dueDate","completed","completedDate","createdDate"])
+        super(["userId","savedPlantID","commonName","frequencyDays","dueDate","completed","completedDate","createdDate","taskName"])
         this.tablename = "Task"
     }
     
@@ -39,8 +39,8 @@ class Task extends Scheme{
             let date = null
             if(completedValue == true) date = Timestamp.now()
             let props ={
-                complete : completedValue,
-                completeDate: date                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                completed : completedValue,
+                completedDate: date                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
             }
             let res = await this.firebase.UpdateDocumentFromCollection(this.tablename,plantTaskID,props)
             return res;
@@ -55,7 +55,7 @@ class Task extends Scheme{
 
     async DeleteCurrentUserAllSavedPlantTasks(plantID){
         try{
-         let res = await this.firebase.RemoveMulipleDocFromCollection(this.tablename,where("plantId","==",plantName))
+         let res = await this.firebase.RemoveMulipleDocFromCollection(this.tablename,where("savedPlantID","==",plantID))
          return res;
          }catch(error){
             return {
