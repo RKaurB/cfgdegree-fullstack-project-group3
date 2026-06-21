@@ -92,7 +92,7 @@ dotenv.config()
             const res = await addDoc(collection(this.#db,tablename),data)
             return { 
                 status:200,
-                data:res,
+                data:res
             }
         }
         catch(error){
@@ -107,24 +107,26 @@ dotenv.config()
     async GetCollectionThatContainCurrentUser(tablename){
         try{
             const col = collection(this.#db,tablename);
-            const user = await this.#auth.currentUser.uid
+
+            const user = await this.#auth.currentUser?.uid
+
             if(user == null) {
                 return {
                     status:404,
                     error:"You are not login in"
                 }
             }
-            //query(citiesRef, where("state", "==", "CA"));
             let q =  query(col,where("userId","==",`${user}`))
             const querySnapshot = await getDocs(q);
+            let data = this.ConvertQuerySnapshotToJson(querySnapshot);
             return {
                 status:200,
-                data: querySnapshot,
+                data: data,
             }
         }catch(error){
             return{
                 status: 500,
-                error: error
+                message: error
             }
         }
 
@@ -133,7 +135,7 @@ dotenv.config()
     async GetCollectionThatContainCurrentUserWithCustomQuery(tablename,custom){
         try{
             const col = collection(this.#db,tablename);
-            const user = await this.#auth.currentUser.uid
+            const user = await this.#auth.currentUser?.uid
             if(user == null) {
                 return {
                     status:404,
@@ -143,9 +145,10 @@ dotenv.config()
             //query(citiesRef, where("state", "==", "CA"));
             let q =  query(col,and(where("userId","==",`${user}`),custom))
             const querySnapshot = await getDocs(q);
+            let data = this.ConvertQuerySnapshotToJson(querySnapshot);
             return {
                 status:200,
-                data: querySnapshot,
+                data: data
             }
         }catch(error){
             return{
@@ -204,6 +207,18 @@ dotenv.config()
                 error: error
             }
         }
+    }
+
+
+    ConvertQuerySnapshotToJson(data){
+        let output = []
+
+        for(let d of data.docs){
+            let docs = d.data();
+            docs["id"] = d.id
+            output.push(docs)
+        }
+        return output;
     }
 
     
