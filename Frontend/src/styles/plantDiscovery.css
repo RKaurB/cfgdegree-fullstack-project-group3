@@ -1,4 +1,4 @@
-/* Layout */
+/* Layout*/
 .container {
     padding: 32px;
     max-width: 1100px;
@@ -11,23 +11,23 @@ h1 {
     margin-bottom: 12px !important;
 }
 
-/* Search Bar */
+/* Search Bar*/
 .search-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 0 0 12px 0 !important;
+    margin-bottom: 12px !important;
 }
 
 .search-bar input {
     width: 100%;
     max-width: 520px;
+    padding: 12px 24px !important;
     background-color: var(--color-cream) !important;
     color: var(--color-dark-green) !important;
     border: 2px solid var(--color-beige) !important;
     border-radius: 24px !important;
-    padding: 12px 24px !important;
 }
 
 .search-bar input::placeholder {
@@ -39,10 +39,13 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 15px;
-    margin-top: 0 !important;
 }
 
-/* Modal */
+.card {
+    cursor: pointer;
+}
+
+/* Modal Overlay */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -53,73 +56,86 @@ h1 {
     z-index: 99999 !important;
 }
 
+/* Modal Content */
 .modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 16px 14px 18px;
     background: var(--color-cream) !important;
     color: var(--color-dark-green) !important;
-    padding: 24px;
     border-radius: 16px;
-    width: 450px;
-    max-width: 90%;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-    position: relative;
-
     display: flex;
     flex-direction: column;
-    gap: 10px;
-
     align-items: center;
+    gap: 12px;
     text-align: center;
 }
 
-/* Close button */
+/* Close Button */
 .close-btn {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 32px !important;
-    height: 32px !important;
-    border: none !important;
-    background: transparent !important;
-    font-size: 24px !important;
-    cursor: pointer;
-    color: var(--color-dark-green) !important;
+    top: 10px;
+    right: 10px;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-dark-green);
+    font-size: 20px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background 0.15s ease;
 }
 
-/* Title */
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Titles */
 .modal-content h2,
 .modal-content h3 {
     margin: 0;
     font-size: 24px;
     font-weight: 700;
-    text-align: center;
 }
 
-/* Text */
+/* Modal Text */
 .modal-content p {
     margin: 4px 0;
     font-size: 15px;
     color: var(--color-dark-green) !important;
 }
 
-/* Button */
-.modal-content button:not(.close-btn),
-.modal-content .btn-garden-dark {
+/* Modal Action Buttons */
+.modal-content .btn-garden-dark,
+.modal-content button:not(.close-btn) {
     width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    background-color: var(--color-dark-green) !important;
-    color: var(--color-cream) !important;
-    border-radius: 25px !important;
-    border: none !important;
-    font-weight: bold;
+    padding: 13px;
+    margin-inline: -4px;
+
+    background-color: var(--color-dark-green);
+    color: var(--color-cream);
+    border: none;
+    border-radius: 999px;
+
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.card {
-    cursor: pointer;
+.modal-content .btn-garden-dark:hover,
+.modal-content button:not(.close-btn):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
