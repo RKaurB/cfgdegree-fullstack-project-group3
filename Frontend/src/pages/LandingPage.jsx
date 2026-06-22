@@ -31,7 +31,11 @@ function LandingPage() {
           return
 
         }
-        alert("Login Failed")
+        if(res.status == 500) {
+          alert("Service Error")
+          return;
+        }
+          alert(data.message)
 
       });
 
@@ -61,11 +65,14 @@ function LandingPage() {
           return
 
         }
-          alert("Register Failed")
+        if(res.status == 500) {
+          alert("Service Error")
+          return;
+        }
+          alert(data.message)
 
         });
       }
-//\tsxv4Diu*;$?EPQ
   }
 
 
