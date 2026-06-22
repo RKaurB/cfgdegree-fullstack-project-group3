@@ -20,6 +20,7 @@ class Account{
                     name:user.user?.displayName,
                     email:user.user?.email,
                     ID: token,
+                    UID: user.user?.uid,
                     message:"Login Successfully"
                 }
 

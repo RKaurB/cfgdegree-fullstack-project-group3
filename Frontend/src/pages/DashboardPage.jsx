@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import PlantCard from "../components/Dashboard/PlantCardComponent";
 import { mockPlants } from "../data/types/SamplePlantDB";
 import styles from "../../src/styles/Dashboard.module.css";
+import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  //Get Current username who login 
+  const currentUsername = useSelector((state) => state.user.username)
   // For redirecting pages
   const navigate = useNavigate();
 
   // Temporary placeholder for user
-  const userName = "User"; 
+  const placeholderUserName = "User"; 
+
+  //Check if user have a name
+  let userName = placeholderUserName
+  if(currentUsername) userName = currentUsername
 
   // Added local state to hold data 
   // const [plants, setPlants] = useState([]); // to test the empty state
@@ -53,6 +60,7 @@ function Dashboard() {
     setIsModalOpen(false); // Close the popup container
     setPlantToDelete(null); 
   };
+  
 
   return (
     <div className={styles.container}>

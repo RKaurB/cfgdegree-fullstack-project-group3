@@ -1,4 +1,4 @@
-/*PLANT CARD*/
+/*Plant Card*/
 
 .card {
     background: var(--color-cream) !important;
@@ -21,7 +21,7 @@
     box-shadow: 0 8px 24px rgba(45, 60, 35, 0.15);
 }
 
-/* IMAGE */
+/* Image */
 .card img {
     width: 100%;
     height: 150px;
@@ -30,7 +30,7 @@
     background-color: var(--color-beige);
 }
 
-/* TEXT */
+/* Text */
 .card h3 {
     margin: 0;
     color: var(--color-dark-green) !important;

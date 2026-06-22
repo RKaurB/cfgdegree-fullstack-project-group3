@@ -1,10 +1,21 @@
-require("dotenv").config();
+require("dotenv").config({ path: '../.env' });
 const express = require("express")
 const {Account} = require("./Auth/Account")
+const cors = require('cors');
+// Import Plant API routes
+const plantRoutes = require("./Routes/PlantRoutes");
+const plantSavedRoutes = require("./Routes/PlantSavedRoutes")
+const account = new Account();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const account = new Account();
+app.use(cors());
+// All plant endpoints start with /api/plants - handled by PlantRoutes.js
+app.use("/api/plants", plantRoutes);
+app.use("/garden", plantSavedRoutes);
+
+
+//Authorias
 app.post("/login", async (req,res)=>{
     const fieldInput  =  ["email","password"];
     if(!checkIfParameterAvailable(req.body,fieldInput)){
@@ -41,12 +52,12 @@ function checkIfParameterAvailable(obj, field) {
   return true;
 }
 
-app.listen(3000,(err) => {
+app.listen(process.env.BACKEND_PORT,(err) => {
   if (err) {
     console.log(err);
     return;
   }
-  console.log(`Listen At PORT 3000`);
+  console.log(`Listen At PORT ${process.env.BACKEND_PORT}`);
 });
 
 
