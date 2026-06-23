@@ -23,7 +23,7 @@ class Scheme{
                 }
             }
 
-        
+ 
     }
 
     checkIfParameterAvailable(obj) {

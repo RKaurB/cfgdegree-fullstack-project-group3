@@ -69,3 +69,6 @@ class Task extends Scheme{
     
 
 }
+
+
+module.exports = { Task };

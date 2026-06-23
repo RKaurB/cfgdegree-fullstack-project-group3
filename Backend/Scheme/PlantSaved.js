@@ -1,59 +1,112 @@
-const {Scheme} = require("./Scheme.js")
-const {where,and, documentId } = require('firebase/firestore/lite')
-class PlantSaved extends Scheme{
-    constructor(){
-        super(["userId","plantApiId","commonName","scientificName","imageURL","plantType","dateAdded"]);
-        this.tablename = "PlantSaved"
-    }
+const { Scheme } = require("./Scheme.js");
+const { Task } = require("./Task");
+const { generateTasks } = require("../Services/SchedulingService.js");
+const { where, and, documentId } = require("firebase/firestore/lite");
 
-    async AddNewDocument(props){
+class PlantSaved extends Scheme {
+  constructor() {
+    super([
+      "userId",
+      "plantApiId",
+      "commonName",
+      "scientificName",
+      "imageURL",
+      "plantType",
+      "dateAdded",
+    ]);
+    this.tablename = "PlantSaved";
+    // Add Task instance
+    this.task = new Task();
+  }
 
-        let res = await super.AddNewDocument(props,this.tablename)
+//   async AddNewDocument(props) {
+//     let res = await super.AddNewDocument(props, this.tablename);
+//     return res;
+//   }
+
+//   async AddNewDocument(props) {
+
+//     let res = await super.AddNewDocument(props, this.tablename);
+
+//     if (res.status !== 200) {
+//         return res;
+//     }
+//     console.log("Plant saved successfully");
+
+//     const generatedTask = generateTasks(props, props.dateAdded);
+//     console.log("Generated tasks:");
+//     console.log(generateTasks);
+
+//     return res;
+//   }
+
+  async AddNewDocument(props) {
+
+    // Save plant
+    let res = await super.AddNewDocument(props, this.tablename);
+
+    // If save fails, then stop
+    if (res.status !== 200) {
         return res;
-        
     }
+    console.log("\nPLANT SAVED\n");
+    console.log(props);
 
-    async GetCurrentUserSavedPlantList(){
-        try{
-            let res = await this.firebase.GetCollectionThatContainCurrentUser(this.tablename)
-            return res;
-        }
-        catch(error){
-            return {
-                status:500,
-                error: error,
-            }
-        }
-    }
-    async GetCurrentUserSingleSavePlant(ID){
-        try{
-            let res = await this.firebase.GetCollectionThatContainCurrentUserWithCustomQuery(this.tablename,where(documentId(),"==",ID))
-            return res;
-        }
-        catch(error){
-            return {
-                status:500,
-                error: error,
-            }
-        }
-    }
-    async RemoveItemPlantList(plantID){
-        try{
-             let res = await this.firebase.RemoveDocumentFromCollection(this.tablename,plantID)
-             return res
-        }catch(error){
-            return {
-                status:500,
-                message: error,
-            }
+    // Generate Tasks
+    const generatedTasks = generateTasks(props, props.dateAdded);
+    console.log("\nGENERATED TASKS\n");
+    console.log(generatedTasks);
 
-        }
+    return res;
 
+  }
+
+
+  async GetCurrentUserSavedPlantList() {
+    try {
+      let res = await this.firebase.GetCollectionThatContainCurrentUser(
+        this.tablename,
+      );
+      return res;
+    } catch (error) {
+      return {
+        status: 500,
+        error: error,
+      };
     }
+  }
+  async GetCurrentUserSingleSavePlant(ID) {
+    try {
+      let res =
+        await this.firebase.GetCollectionThatContainCurrentUserWithCustomQuery(
+          this.tablename,
+          where(documentId(), "==", ID),
+        );
+      return res;
+    } catch (error) {
+      return {
+        status: 500,
+        error: error,
+      };
+    }
+  }
+  async RemoveItemPlantList(plantID) {
+    try {
+      let res = await this.firebase.RemoveDocumentFromCollection(
+        this.tablename,
+        plantID,
+      );
+      return res;
+    } catch (error) {
+      return {
+        status: 500,
+        message: error,
+      };
+    }
+  }
 }
 
-module.exports = {PlantSaved}
-
+module.exports = { PlantSaved };
 
 /*4. Save tasks
 Tasks are stored in Firebase.
