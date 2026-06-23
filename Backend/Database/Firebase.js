@@ -126,7 +126,7 @@ dotenv.config()
         }catch(error){
             return{
                 status: 500,
-                message: error
+                error: error
             }
         }
 
