@@ -64,7 +64,11 @@ dotenv.config()
     }
     async Signout(){
         try{
-            await signOut(this.#auth)
+           let res =  await signOut(this.#auth)
+           return{
+            status: 200,
+            message:"User Sign Out Successful"
+           }
         }catch(error){
         return{
             errorCode: error?.code,
@@ -126,7 +130,7 @@ dotenv.config()
         }catch(error){
             return{
                 status: 500,
-                message: error
+                error: error
             }
         }
 

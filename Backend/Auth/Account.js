@@ -58,9 +58,21 @@ class Account{
     }
     async SignoutCurrentAccount(){
         try{
-            await this.firebase.Signout();
+           let res =  await this.firebase.Signout();
+           if(res.status != undefined){
+                return res
+           }
+           else{
+            return{
+                status : 409,
+                message: res.errorCode
+            }
+           }
         }catch(error){
-        return error
+         return {
+                status:500,
+                message:error
+            }
         }
     }
     async DeleteCurrentAccount(){

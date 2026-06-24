@@ -39,8 +39,9 @@ app.post("/register",async (req,res)=>{
 
 })
 
-app.post("/signout", async ()=>{
-  
+app.post("/signout", async (req,res)=>{
+  const result = await account.SignoutCurrentAccount()
+  res.status(result.status).send(result)
 })
 
 

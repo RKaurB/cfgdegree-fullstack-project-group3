@@ -1,9 +1,19 @@
-import React, { useState } from "react"; 
+import React, { useState,useEffect } from "react"; 
 import PlantCard from "../components/Dashboard/PlantCardComponent";
 import { mockPlants } from "../data/types/SamplePlantDB";
 import styles from "../../src/styles/Dashboard.module.css";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import {GetSavedPlantList,RemovePlantFromGarden} from "../api/SavedPlantAPI"
+async function UserSavedList(){
+  let res = await GetSavedPlantList()
+  if(Math.floor(res.status/100)==2){
+    let resJson = await res.json();
+    console.log(JSON.stringify(resJson))
+    return resJson?.data
+  }
+  return mockPlants
+}
 
 function Dashboard() {
   //Get Current username who login 
@@ -39,6 +49,11 @@ function Dashboard() {
   // Hold the complete selected plant object instead of just text
   const [plantToDelete, setPlantToDelete] = useState(null);
 
+  useEffect(() => {
+      UserSavedList().then((res)=>{
+        setPlants(res)
+      })
+  }, []);
   // Redirecting to care schedule pages
   const handleView = (plantName) => {
     navigate(`/schedule?plant=${encodeURIComponent(plantName)}`);
@@ -50,12 +65,21 @@ function Dashboard() {
     setIsModalOpen(true); 
   };
 
-  // This will run when user clicks "delete" inside the modal
+
+  // Run this when user clicks "delete" inside the modal 
   const confirmDelete = () => {
     if (plantToDelete) {
      // Filter through 'plants' state using the saved object ID
-      const updatedPlants = plants.filter((p) => p.id !== plantToDelete.id);
-      setPlants(updatedPlants);
+     RemovePlantFromGarden(plantToDelete.id).then((res)=>{
+      if(res.status == 200){
+          const updatedPlants = plants.filter((p) => p.id !== plantToDelete.id);
+          setPlants(updatedPlants);
+        return;
+      }
+      alert("Fail To Delete Plant ")
+
+     })
+  
     }
     setIsModalOpen(false); // Close the popup container
     setPlantToDelete(null); 
@@ -172,11 +196,11 @@ function Dashboard() {
       <div className={styles.grid}>
         {filteredPlants.map((plant) => (
           <PlantCard
-            key={plant.id}
-            name={plant.name}
-            date={plant.date}
-            image={plant.image}
-            onView={() => handleView(plant.name)} 
+            key={plant?.id}
+            name={plant.commonName}
+            date={plant.dateAdded}
+            image={plant.imageURL}
+            onView={() => handleView(plant.commonName)} 
             // Passing the entire 'plant' object so the app gets both ID and Name
             onDelete={() => openDeleteModal(plant)}
           />

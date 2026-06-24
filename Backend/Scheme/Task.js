@@ -37,7 +37,11 @@ class Task extends Scheme{
     async UpdateCurrentUserTaskForCompletion(plantTaskID, completedValue){
         try{
             let date = null
-            if(completedValue == true) date = Timestamp.now()
+            if(completedValue == true){ 
+                let dateFull = new Date();
+                date = `${dateFull.getFullYear()}-${dateFull.getMonth()+1}-${dateFull.getDate()}`
+
+            }
             let props ={
                 completed : completedValue,
                 completedDate: date                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
