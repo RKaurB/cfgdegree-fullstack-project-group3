@@ -32,7 +32,22 @@ function LandingPage() {
           nav("/dashboard");
           return;
         }
-        alert("Login Failed");
+        if(res.status == 500) {
+          alert("Service Error")
+          return;
+        }
+          alert(data.message)
+
+      });
+
+  }
+//Register
+  async function handleSubmitRegister(e){
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      if(formData.get("password1") != formData.get("password2")){
+        alert("Password are not the same")
+        return
       }
     );
   }
@@ -62,10 +77,14 @@ function LandingPage() {
           nav("/dashboard");
           return;
         }
-        alert("Register Failed");
-      });
-    }
-    //\tsxv4Diu*;$?EPQ
+        if(res.status == 500) {
+          alert("Service Error")
+          return;
+        }
+          alert(data.message)
+
+        });
+      }
   }
 
   return (

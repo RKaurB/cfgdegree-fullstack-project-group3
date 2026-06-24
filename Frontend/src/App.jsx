@@ -7,6 +7,7 @@ import SchedulePage from './pages/SchedulePage'
 import SearchPage from './pages/SearchPage'
 import {Provider} from 'react-redux'
 import { store } from './Store'
+import { ProtectRoutes } from './components/ProtectedRoutes'
 
 function App(){
   return (
@@ -15,9 +16,9 @@ function App(){
       <NavBar></NavBar>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/schedule" element={<SchedulePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/schedule" element={<ProtectRoutes><SchedulePage /></ProtectRoutes>} />
+          <Route path="/search" element={<ProtectRoutes><SearchPage /></ProtectRoutes>} />
+          <Route path="/dashboard" element={<ProtectRoutes><DashboardPage /></ProtectRoutes>} />
         </Routes>
       <Footer></Footer>
     </BrowserRouter>
