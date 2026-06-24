@@ -1,35 +1,36 @@
 import Button from "../components/Button";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import { faLeaf, faSeedling, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
+import {
+  faLeaf,
+  faSeedling,
+  faCalendarDays,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import {updateUserInfo} from "../feature/UserSlice"
-import {LoginAPI,RegisterAPI} from "../api/AuthAPI"
-
-
+import { updateUserInfo } from "../feature/UserSlice";
+import { LoginAPI, RegisterAPI } from "../api/AuthAPI";
 
 function LandingPage() {
-  const dispatch = useDispatch()
-  const nav = useNavigate()
-//Login
-  async function handleSubmitLogin(e){
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      LoginAPI(formData.get("email"),formData.get("password")).then(async (res)=>{
-        let data = await res.json()
-        console.log(data)
-        if(res.status == 200){
-          
-          let input ={
-            email:data.email,
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  //Login
+  async function handleSubmitLogin(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    LoginAPI(formData.get("email"), formData.get("password")).then(
+      async (res) => {
+        let data = await res.json();
+        console.log(data);
+        if (res.status == 200) {
+          let input = {
+            email: data.email,
             id: data.UID,
-            username:data.name
-          }
-          dispatch(updateUserInfo(input))
-          alert("Login Successfull")
-          nav("/dashboard")
-          return
-
+            username: data.name,
+          };
+          dispatch(updateUserInfo(input));
+          alert("Login Successfull");
+          nav("/dashboard");
+          return;
         }
         if(res.status == 500) {
           alert("Service Error")
@@ -48,22 +49,33 @@ function LandingPage() {
         alert("Password are not the same")
         return
       }
-      else{
-        RegisterAPI(formData.get("name"),formData.get("email"),formData.get("password1")).then(async (res)=>{
-          let data = await res.json()
-          console.log(data)
-        if(res.status == 201){
-          
-          let input ={
-            email:data.email,
+    );
+  }
+  //Register
+  async function handleSubmitRegister(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    if (formData.get("password1") != formData.get("password2")) {
+      alert("Password are not the same");
+      return;
+    } else {
+      RegisterAPI(
+        formData.get("name"),
+        formData.get("email"),
+        formData.get("password1")
+      ).then(async (res) => {
+        let data = await res.json();
+        console.log(data);
+        if (res.status == 201) {
+          let input = {
+            email: data.email,
             id: data.UID,
-            username:data.name
-          }
-          dispatch(updateUserInfo(input))
-          alert("Register Successful")
-          nav("/dashboard")
-          return
-
+            username: data.name,
+          };
+          dispatch(updateUserInfo(input));
+          alert("Register Successful");
+          nav("/dashboard");
+          return;
         }
         if(res.status == 500) {
           alert("Service Error")
@@ -87,95 +99,122 @@ function LandingPage() {
 
       <div className="container mt-4 p-4" id="features-section">
         <div className="row">
-            <div className="col">
-                <FontAwesomeIcon icon={faLeaf} style={{fontSize: '48px'}}/>
-                <h5>Discover Plants</h5>
-                <p>Search and explore thousands of plants to find the perfect ones for your garden.</p>
-            </div>
-            <div className="col">
-                <FontAwesomeIcon icon={faSeedling} style={{fontSize: '48px'}}/>
-                <h5>Build Your Garden</h5>
-                <p>Save your favourite plants and create your own personalised garden collection.</p>
-
-            </div>
-            <div className="col">
-                <FontAwesomeIcon icon={faCalendarDays} style={{fontSize: '48px'}}/>
-                <h5>Never Miss a Watering Day</h5>
-                <p>Get auto-generated care schedules and track your gardening tasks with ease.</p>
-            </div>
-
+          <div className="col">
+            <FontAwesomeIcon icon={faLeaf} style={{ fontSize: "48px" }} />
+            <h5>Discover Plants</h5>
+            <p>
+              Search and explore thousands of plants to find the perfect ones
+              for your garden.
+            </p>
+          </div>
+          <div className="col">
+            <FontAwesomeIcon icon={faSeedling} style={{ fontSize: "48px" }} />
+            <h5>Build Your Garden</h5>
+            <p>
+              Save your favourite plants and create your own personalised garden
+              collection.
+            </p>
+          </div>
+          <div className="col">
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              style={{ fontSize: "48px" }}
+            />
+            <h5>Never Miss a Watering Day</h5>
+            <p>
+              Get auto-generated care schedules and track your gardening tasks
+              with ease.
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="container" id="auth-section">
-        <div className="row mt-5 justify-content-center">
-          <div className="col auth-form h-100">
+        <h3 className="text-center mb-4 auth-tagline">
+          Join our community of gardeners
+        </h3>
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <img
+              src="https://images.unsplash.com/photo-1533792344354-ed5e8fc12494?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="plants"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+            />
+          </div>
+          <div className="col-md-6">
+          <div className="auth-form mb-4">
             <form onSubmit={handleSubmitLogin}>
-                <h2>Login</h2>
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Type your email"
-                  className="form-control mb-2"
-                  required
-                />
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Type your password"
-                  className="form-control mb-2"
-                  required
-                />
-                <Button text="Submit" color="btn-garden-dark" />
+              <h2>Login</h2>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Type your email"
+                className="form-control mb-2"
+                required
+              />
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Type your password"
+                className="form-control mb-2"
+                required
+              />
+              <Button text="Submit" color="btn-garden-dark" />
             </form>
           </div>
-          <div className="col auth-form h-100">
+          <div className="auth-form">
             <form onSubmit={handleSubmitRegister}>
-                <h2>Register</h2>
-                <label>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Type your name"
-                  className="form-control mb-2"
-                  required
-                />
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email1"
-                  placeholder="Type your email"
-                  className="form-control mb-2"
-                  required
-                />
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password1"
-                  id="password1"
-                  placeholder="Type a new password"
-                  className="form-control mb-2"
-                  required
-                />
-                <label>Confirm your password</label>
-                <input
-                  type="password"
-                  name="password2"
-                  id="password2"
-                  placeholder="Confirm your new password"
-                  className="form-control mb-2"
-                  required
-                />
-                <Button text="Submit" color="btn-garden-dark" />
+              <h2>Register</h2>
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Type your name"
+                className="form-control mb-2"
+                required
+              />
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email1"
+                placeholder="Type your email"
+                className="form-control mb-2"
+                required
+              />
+              <label>Password</label>
+              <input
+                type="password"
+                name="password1"
+                id="password1"
+                placeholder="Type a new password"
+                className="form-control mb-2"
+                required
+              />
+              <label>Confirm your password</label>
+              <input
+                type="password"
+                name="password2"
+                id="password2"
+                placeholder="Confirm your new password"
+                className="form-control mb-2"
+                required
+              />
+              <Button text="Submit" color="btn-garden-dark" />
             </form>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
