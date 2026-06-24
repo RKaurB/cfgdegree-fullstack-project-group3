@@ -44,7 +44,7 @@ class PlantSaved extends Scheme{
         }catch(error){
             return {
                 status:500,
-                message: error,
+                error: error,
             }
 
         }
