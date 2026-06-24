@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
       const currentUsername = useSelector((state) => state.user.username)
       let fullUrl = `${url}AddNewPlant`
       let date = new Date();
-      let stringDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+      let stringDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
       let res = await fetch(fullUrl,{
         method:"POST",
         headers:{
@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
         },
         body:JSON.stringify({
             userId: currentUsername,
-            plantAPI:prop.plantAPI,
+            plantApiId:prop.plantApiId,
             commonName:prop?.commonName,
             scientificName:prop?.scientificName,
             imageURL:prop?.imageURL,
@@ -36,7 +36,7 @@ import { useSelector } from 'react-redux'
     return res;    
   }
     export async function GetAPlantINFO(id){
-    let fullUrl = `${url}GetAllSavedPlantList/${id}`
+    let fullUrl = `${url}GetSavedPlant/${id}`
     let res = await fetch(fullUrl,{
         method:"GET",
         headers:{

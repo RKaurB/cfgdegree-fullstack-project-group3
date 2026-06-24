@@ -39,7 +39,7 @@ class Task extends Scheme{
             let date = null
             if(completedValue == true){ 
                 let dateFull = new Date();
-                date = `${dateFull.getFullYear()}-${dateFull.getMonth()}-${dateFull.getDate()}`
+                date = `${dateFull.getFullYear()}-${dateFull.getMonth()+1}-${dateFull.getDate()}`
 
             }
             let props ={
