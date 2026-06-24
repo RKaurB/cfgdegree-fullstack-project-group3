@@ -41,12 +41,10 @@ class Scheme {
         // Get value stored in that field object
         const fieldValue = obj[fieldName];
         // Show field name and value
-        console.log("Checking field:", fieldName);
-        console.log("Value:", fieldValue);
+        // console.log("Checking field:", fieldName);
+        // console.log("Value:", fieldValue);
         // Check if field missing (null or empty)
         if (fieldValue === null || fieldValue === "") {
-            // Which field failed validation?
-            console.log("MISSING FIELD VALUE:", fieldName);
             return false;
         }
     }
