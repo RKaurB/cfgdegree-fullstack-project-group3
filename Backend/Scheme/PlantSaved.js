@@ -108,19 +108,31 @@ class PlantSaved extends Scheme {
       };
     }
   }
+
   async RemoveItemPlantList(plantID) {
+
     try {
+
+      // Delete all tasks linked to plant first
+      await this.task.DeleteCurrentUserAllSavedPlantTasks(plantID);
+
+      // Delete saved plant (PlantSaved document in Firestore)
       let res = await this.firebase.RemoveDocumentFromCollection(
         this.tablename,
         plantID,
       );
+
       return res;
+
     } catch (error) {
+
       return {
         status: 500,
-        message: error,
+        error: error,
       };
+
     }
+
   }
 }
 
