@@ -1,13 +1,33 @@
+import { useSelector } from "react-redux";
+
 function NavBar() {
-    return <nav className="navbar navbar-expand">
-        <div className="container-fluid">
-        <a href="/login" className="navbar-brand">Garden Buddy</a>
+  const username = useSelector((state) => state.user.username);
+
+  return (
+    <nav className="navbar navbar-expand">
+      <div className="container-fluid">
+        <a href="/login" className="navbar-brand">
+          Garden Buddy
+        </a>
         <div className="navbar-nav ms-auto">
-        <a href="#auth-section" className="nav-link">Login</a>
-        <a href="#auth-section" className="nav-link">Register</a>
+          {username ? (
+            <span className="nav-link">
+              Welcome to your garden, {username}!
+            </span>
+          ) : (
+            <>
+              <a href="#auth-section" className="nav-link">
+                Login
+              </a>
+              <a href="#auth-section" className="nav-link">
+                Register
+              </a>
+            </>
+          )}
         </div>
-        </div>
-        </nav>
+      </div>
+    </nav>
+  );
 }
 
-export default NavBar
+export default NavBar;

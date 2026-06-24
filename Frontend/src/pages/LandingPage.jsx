@@ -106,8 +106,9 @@ function LandingPage() {
       </div>
 
       <div className="container" id="auth-section">
-        <div className="row mt-5 justify-content-center">
-          <div className="col auth-form h-100">
+      <h3 className="text-center mb-4 auth-tagline">Join our community of gardeners</h3>
+        <div className="mt-3">
+          <div className="auth-form">
             <form onSubmit={handleSubmitLogin}>
                 <h2>Login</h2>
                 <label>Email</label>
@@ -131,7 +132,7 @@ function LandingPage() {
                 <Button text="Submit" color="btn-garden-dark" />
             </form>
           </div>
-          <div className="col auth-form h-100">
+          <div className="auth-form mt-4">
             <form onSubmit={handleSubmitRegister}>
                 <h2>Register</h2>
                 <label>Name</label>
