@@ -31,12 +31,12 @@ console.log("\n");
 // Test generateTasks()
 // ========================================
 
-// Test that task object is created ready for Firebase storage
+// Test that task object is created ready for Firestore storage
 console.log("GENERATE TASKS TEST\n");
 
 const carrot = {
     commonName: "carrot",
-    type: "Vegetable"
+    plantType: "Vegetable"
 }
 console.log(generateTasks(carrot, "2026-06-01"));
 
@@ -47,7 +47,7 @@ console.log("\n");
 // Test generateNextTask()
 // ========================================
 
-// Test that the next recurring task object is created ready for Firebase storage
+// Test that the next recurring task object is created ready for Firestore storage
 console.log("RECURRING TASK TEST\n");
 
 const task = {
