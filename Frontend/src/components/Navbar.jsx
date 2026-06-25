@@ -39,10 +39,10 @@ function NavBar() {
             </>
           ) : (
             <>
-              <a href="#auth-section" className="nav-link">
+              <a href="/#login-section" className="nav-link">
                 Login
               </a>
-              <a href="#auth-section" className="nav-link">
+              <a href="/#register-section" className="nav-link">
                 Register
               </a>
             </>
