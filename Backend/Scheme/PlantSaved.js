@@ -110,9 +110,7 @@ class PlantSaved extends Scheme {
   }
 
   async RemoveItemPlantList(plantID) {
-
     try {
-
       // Delete all tasks linked to plant first
       await this.task.DeleteCurrentUserAllSavedPlantTasks(plantID);
 
@@ -123,16 +121,12 @@ class PlantSaved extends Scheme {
       );
 
       return res;
-
     } catch (error) {
-
       return {
         status: 500,
         error: error,
       };
-
     }
-
   }
 }
 

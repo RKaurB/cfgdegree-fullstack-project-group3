@@ -81,14 +81,19 @@ class FirebaseDB {
       };
     }
   }
-  async Signout() {
-    try {
-      await signOut(this.#auth);
-    } catch (error) {
-      return {
-        errorCode: error?.code,
-        errorMessage: error?.message,
-      };
+
+  async Signout(){
+    try{
+        let res =  await signOut(this.#auth)
+        return{
+            status: 200,
+            message:"User Sign Out Successful"
+           }
+        }catch(error){
+        return{
+            errorCode: error?.code,
+            errorMessage:error?.message
+        }
     }
   }
 
@@ -103,6 +108,8 @@ class FirebaseDB {
       };
     }
   }
+
+
   //////Collection
 
   async AddDataToCollection(tablename, data) {
@@ -118,7 +125,7 @@ class FirebaseDB {
         error: error,
       };
     }
-  }
+}
 
   async GetCollectionThatContainCurrentUser(tablename) {
     try {
@@ -142,7 +149,7 @@ class FirebaseDB {
     } catch (error) {
       return {
         status: 500,
-        message: error,
+        error: error,
       };
     }
   }
