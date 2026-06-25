@@ -102,11 +102,12 @@ function calculateDueDate (dateAdded, frequencyDays) {
 // Generate initial care tasks 
 // ======================================
 
-// Generates initial task objects ready for Firebase storage (when  plant is added to User's garden)
+// Generates initial task objects ready for Firestore storage (when  plant is added to User's garden)
 function generateTasks (plant, dateAdded){
 
     // Select correct template
-    const template = getTemplate(plant.type);
+    const template = getTemplate(plant.plantType);
+
 
     // Array to store tasks
     const generatedTasks = [];
@@ -138,7 +139,7 @@ function generateTasks (plant, dateAdded){
 // Generate next task
 // ======================================
 
-// Generates next recurring task object ready for Firebase storage, when existing task is marked as completed
+// Generates next recurring task object ready for Firestore storage, when existing task is marked as completed
 function generateNextTask(task, completedDate) {
 
     // Copy task into nextTask
