@@ -28,7 +28,6 @@ function LandingPage() {
             username: data.name,
           };
           dispatch(updateUserInfo(input));
-          alert("Login Successfull");
           nav("/dashboard");
           return;
         }
@@ -72,7 +71,6 @@ function LandingPage() {
             username: data.name,
           };
           dispatch(updateUserInfo(input));
-          alert("Register Successful");
           nav("/dashboard");
           return;
         }
