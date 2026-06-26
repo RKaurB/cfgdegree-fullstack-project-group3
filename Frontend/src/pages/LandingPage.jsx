@@ -41,16 +41,7 @@ function LandingPage() {
       });
 
   }
-//Register
-  async function handleSubmitRegister(e){
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      if(formData.get("password1") != formData.get("password2")){
-        alert("Password are not the same")
-        return
-      }
-    );
-  }
+  
   //Register
   async function handleSubmitRegister(e) {
     e.preventDefault();

@@ -5,6 +5,7 @@ const cors = require('cors');
 // Import Plant API routes
 const plantRoutes = require("./Routes/PlantRoutes");
 const plantSavedRoutes = require("./Routes/PlantSavedRoutes")
+const taskRoutes = require("./Routes/TaskRoutes");
 const account = new Account();
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(cors());
 // All plant endpoints start with /api/plants - handled by PlantRoutes.js
 app.use("/api/plants", plantRoutes);
 app.use("/garden", plantSavedRoutes);
+app.use("/tasks", taskRoutes);
 
 
 //Authorias
