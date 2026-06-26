@@ -48,8 +48,7 @@ function LandingPage() {
       if(formData.get("password1") != formData.get("password2")){
         alert("Password are not the same")
         return
-      }
-    );
+      };
   }
   //Register
   async function handleSubmitRegister(e) {
