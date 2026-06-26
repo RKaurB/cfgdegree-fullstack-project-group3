@@ -30,12 +30,12 @@ function Dashboard() {
 
   // Added local state to hold data 
   // const [plants, setPlants] = useState([]); // to test the empty state
-  const [plants, setPlants] = useState(mockPlants); // uncomment this to back to the grid layout
+  const [plants, setPlants] = useState([]); // uncomment this to back to the grid layout
 
   // Search/filter plants 
   const [searchTerm, setSearchTerm] = useState("");
   const filteredPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+    plant.commonName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // task to be completed (2 plants)
