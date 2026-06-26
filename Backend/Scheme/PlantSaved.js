@@ -40,6 +40,7 @@ class PlantSaved extends Scheme {
       // Current date
       dateAdded: currentDate,
     };
+    console.log(plantToSave)
 
     // Save plant to Firestore
     let res = await super.AddNewDocument(plantToSave, this.tablename);

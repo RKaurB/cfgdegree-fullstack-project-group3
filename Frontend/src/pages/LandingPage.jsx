@@ -49,7 +49,6 @@ function LandingPage() {
         alert("Password are not the same")
         return
       }
-    );
   }
   //Register
   async function handleSubmitRegister(e) {

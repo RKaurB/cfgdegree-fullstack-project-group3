@@ -14,9 +14,9 @@ function PlantCard({ plant, onViewDetails }) {
   return (
     <div className="card" onClick={handleClick}>
       
-      <img src={plant.image} alt={plant.name} />
+      <img src={plant.image} alt={plant.commonName} />
 
-      <h3>{plant.name}</h3>
+      <h3>{plant.commonName}</h3>
 
       <p>🌱 Difficulty: {plant.difficulty}</p>
       <p>☀️ Light: {plant.light}</p>
