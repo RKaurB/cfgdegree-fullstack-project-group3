@@ -5,6 +5,9 @@ import styles from "../../src/styles/Dashboard.module.css";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import {GetSavedPlantList,RemovePlantFromGarden} from "../api/SavedPlantAPI"
+import LoadingSection from "../components/LoadingSection";
+
+
 async function UserSavedList(){
   let res = await GetSavedPlantList()
   if(Math.floor(res.status/100)==2){
@@ -34,8 +37,8 @@ function Dashboard() {
 
   // Search/filter plants 
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPlants = plants.filter((plant) => 
+    plant.commonName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // task to be completed (2 plants)
@@ -49,11 +52,17 @@ function Dashboard() {
   // Hold the complete selected plant object instead of just text
   const [plantToDelete, setPlantToDelete] = useState(null);
 
+  // Loading State
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
       UserSavedList().then((res)=>{
-        setPlants(res)
-      })
+        setPlants(res);
+        setLoading(false);
+      });
   }, []);
+
+
   // Redirecting to care schedule pages
   const handleView = (plantName) => {
     navigate(`/schedule?plant=${encodeURIComponent(plantName)}`);
@@ -85,7 +94,11 @@ function Dashboard() {
     setPlantToDelete(null); 
   };
   
-
+// Loading Section
+if (loading) {
+  return <LoadingSection text="Loading your garden..." />;
+}
+  
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>My Garden 🌱</h1>
@@ -221,7 +234,7 @@ function Dashboard() {
           >
             <h3 className={styles.modalTitle}>Delete Plant?</h3>
             <p className={styles.modalText}>
-              Remove <b>{plantToDelete.name}</b> from your garden?
+              Remove <b>{plantToDelete.commonName}</b> from your garden?
             </p>
 
             <div className={styles.modalButtons}>
