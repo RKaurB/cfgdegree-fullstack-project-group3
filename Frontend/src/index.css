@@ -6,6 +6,11 @@
   --color-cream: #FFF8EC;
 }
 
+/* stopping pages from opening at the bottom */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-light-green) !important;
   color: var(--color-cream) !important;
@@ -18,6 +23,11 @@ body {
 
 .navbar a {
   color: var(--color-cream) !important;
+}
+
+.nav-link {
+  color: var(--color-cream)!important;
+
 }
 
 .btn-garden-dark {

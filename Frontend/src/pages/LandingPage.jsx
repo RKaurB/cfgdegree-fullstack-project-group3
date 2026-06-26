@@ -28,7 +28,6 @@ function LandingPage() {
             username: data.name,
           };
           dispatch(updateUserInfo(input));
-          alert("Login Successfull");
           nav("/dashboard");
           return;
         }
@@ -72,7 +71,6 @@ function LandingPage() {
             username: data.name,
           };
           dispatch(updateUserInfo(input));
-          alert("Register Successful");
           nav("/dashboard");
           return;
         }
@@ -146,7 +144,7 @@ function LandingPage() {
             />
           </div>
           <div className="col-md-6">
-          <div className="auth-form mb-4">
+          <div className="auth-form mb-4" id="login-section">
             <form onSubmit={handleSubmitLogin}>
               <h2>Login</h2>
               <label>Email</label>
@@ -170,7 +168,7 @@ function LandingPage() {
               <Button text="Submit" color="btn-garden-dark" />
             </form>
           </div>
-          <div className="auth-form">
+          <div className="auth-form" id="register-section">
             <form onSubmit={handleSubmitRegister}>
               <h2>Register</h2>
               <label>Name</label>
