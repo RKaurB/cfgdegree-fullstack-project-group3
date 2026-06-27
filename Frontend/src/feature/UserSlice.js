@@ -8,7 +8,7 @@ const userSlice = createSlice({
             state.email = action.payload.email
             state.id = action.payload.id
             state.username = action.payload.username
-            localStorage.setItem("email",action.payload.username)
+            localStorage.setItem("email",action.payload.email)
             localStorage.setItem("id",action.payload.id)
             localStorage.setItem("username",action.payload.username)
         },
