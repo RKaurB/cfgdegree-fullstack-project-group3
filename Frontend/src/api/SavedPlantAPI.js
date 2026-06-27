@@ -1,23 +1,31 @@
-import { useSelector } from 'react-redux'
   let url = "http://localhost:3000/garden/"
 
-  export async function AddNewPlantToDashboard(prop){
-      const currentUsername = useSelector((state) => state.user.username)
+  export async function AddNewPlantToDashboard(prop,currentUserID){
       let fullUrl = `${url}AddNewPlant`
       let date = new Date();
       let stringDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+      console.log({
+            userId: currentUserID,
+            plantApiId:prop.id,
+            commonName:prop?.commonName,
+            scientificName:prop?.scientificName,
+            imageURL:prop?.image,
+            plantType:prop?.type,
+            dateAdded: stringDate
+      })
       let res = await fetch(fullUrl,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
         },
+        
         body:JSON.stringify({
-            userId: currentUsername,
-            plantApiId:prop.plantApiId,
+            userId: currentUserID,
+            plantApiId:prop.id,
             commonName:prop?.commonName,
             scientificName:prop?.scientificName,
-            imageURL:prop?.imageURL,
-            plantType:prop?.plantType,
+            imageURL:prop?.image,
+            plantType:prop?.type,
             dateAdded: stringDate
         })
       } 

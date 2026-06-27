@@ -1,17 +1,25 @@
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserInfo } from "../feature/UserSlice";
+import { SignOutAPI } from "../api/AuthAPI";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import logo from "../assets/plant.png";
 
 function NavBar() {
   const username = useSelector((state) => state.user.username);
   const dispatch = useDispatch();
   const nav = useNavigate();
-
   function handleSignOut() {
-    dispatch(clearUserInfo());
-    nav("/");
-  }
+    SignOutAPI().then(async (res)=>{
+      if(res.ok){
+          dispatch(clearUserInfo());
+          nav("/");
+      }else{
+        alert("Fail To SignOut")
+      }
+    })
+
+  }  
 
   return (
     <nav className="navbar navbar-expand">
@@ -30,6 +38,25 @@ function NavBar() {
               <span className="nav-link">
                 Welcome to your garden, {username}!
               </span>
+              <button
+                onClick={()=>{nav("/dashboard");}}
+                className="nav-link btn btn-link ms-3"
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={()=>{nav("/search");}}
+                className="nav-link btn btn-link ms-3"
+              >
+                Search Plant
+              </button>
+
+              <button
+                onClick={()=>{nav("/schedule");}}
+                className="nav-link btn btn-link ms-3"
+              >
+                Care-Schedule
+              </button>
               <button
                 onClick={handleSignOut}
                 className="nav-link btn btn-link ms-3"
