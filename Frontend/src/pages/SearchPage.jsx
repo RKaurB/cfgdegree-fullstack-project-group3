@@ -10,14 +10,20 @@ function SearchPage() {
   // Stores the user's search input
   const [query, setQuery] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   // Stores the plant clicked by the user
   // If null its closed
   const [selectedPlant, setSelectedPlant] = useState(null);
 
   // Filter plants based on search input
   const filteredPlants = mockPlants.filter((plant) =>
-    plant.name.toLowerCase().includes(query.toLowerCase())
+    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSearch = () => {
+    setSearchTerm(query);
+  };
 
   return (
     <div className="container">
@@ -25,8 +31,8 @@ function SearchPage() {
       <h1>🌿 Discover Beginner Friendly Plants</h1>
 
       {/* Search input */}
-      <SearchBar query={query} setQuery={setQuery} />
-
+      <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
+      
       {/* Grid of plant cards */}
       <SearchResults
         plants={filteredPlants}

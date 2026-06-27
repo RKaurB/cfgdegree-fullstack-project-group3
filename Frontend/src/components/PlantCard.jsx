@@ -17,11 +17,7 @@ function PlantCard({ plant, onViewDetails }) {
       <img src={plant.image} alt={plant.name} />
 
       <h3>{plant.name}</h3>
-
-      <p>🌱 Difficulty: {plant.difficulty}</p>
-      <p>☀️ Light: {plant.light}</p>
-      <p>💧 Water: {plant.water}</p>
-
+      
       <button
   className="btn-garden-dark"
   onClick={(e) => {
