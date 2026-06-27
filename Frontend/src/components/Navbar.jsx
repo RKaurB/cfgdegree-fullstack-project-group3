@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserInfo } from "../feature/UserSlice";
+import { SignOutAPI } from "../api/AuthAPI";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/plant.png";
 
@@ -9,8 +10,15 @@ function NavBar() {
   const nav = useNavigate();
 
   function handleSignOut() {
-    dispatch(clearUserInfo());
-    nav("/");
+    SignOutAPI().then(async (res)=>{
+      if(res.ok){
+          dispatch(clearUserInfo());
+          nav("/");
+      }else{
+        alert("Fail To SignOut")
+      }
+    })
+
   }
 
   return (
