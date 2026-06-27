@@ -63,7 +63,7 @@ function PlantDetailsModal({ plant, onClose }) {
 
           {/* Description */}
           <p className="description">
-            {plant.description || "No description available."}
+            {plantDetail.description || "No description available."}
           </p>
 
           {/* Action button */}
