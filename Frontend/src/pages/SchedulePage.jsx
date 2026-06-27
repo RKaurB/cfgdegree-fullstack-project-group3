@@ -1,46 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../SchedulePage.module.css";
-
-const startingTasks = [
-  {
-    id: 1,
-    plantName: "Basil",
-    task: "Water plant",
-    dueDate: "15 June 2026",
-    status: "Due soon",
-    completed: false,
-  },
-  {
-    id: 2,
-    plantName: "Tomato",
-    task: "Check soil",
-    dueDate: "17 June 2026",
-    status: "Upcoming",
-    completed: false,
-  },
-  {
-    id: 3,
-    plantName: "Rose",
-    task: "Remove dead flowers",
-    dueDate: "18 June 2026",
-    status: "Upcoming",
-    completed: false,
-  },
-];
+import { GetTaskList, UpdateTaskCompletion } from "../api/TaskAPI";
 
 function SchedulePage() {
-  const [tasks, setTasks] = useState(startingTasks);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const handleTaskComplete = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: true } : task
-      )
-    );
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const res = await GetTaskList();
+        const data = await res.json();
+
+        if (res.status === 200) {
+          setTasks(data.data || []);
+        } else {
+          setError(data.error || data.message || "Could not load tasks.");
+        }
+      } catch (error) {
+        console.error(error);
+        setError("Could not connect to the backend.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const handleTaskComplete = async (taskId) => {
+    try {
+      const res = await UpdateTaskCompletion(taskId, true);
+      const data = await res.json();
+
+      if (res.status === 200) {
+        setTasks((currentTasks) =>
+          currentTasks.map((task) =>
+            task.id === taskId ? { ...task, completed: true } : task
+          )
+        );
+      } else {
+        alert(data.message || "Could not update task.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Could not connect to the backend.");
+    }
   };
 
   const upcomingTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
+
+  if (loading) {
+    return (
+      <main className={styles.schedulePage}>
+        <p>Loading your care schedule...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className={styles.schedulePage}>
+        <p>{error}</p>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.schedulePage}>
@@ -76,10 +105,10 @@ function SchedulePage() {
             upcomingTasks.map((task) => (
               <div key={task.id} className={styles.taskCard}>
                 <div>
-                  <h3>{task.plantName}</h3>
-                  <p>{task.task}</p>
+                  <h3>{task.commonName}</h3>
+                  <p>{task.taskName}</p>
                   <p className={styles.date}>Due: {task.dueDate}</p>
-                  <span className={styles.status}>{task.status}</span>
+                  <span className={styles.status}>Upcoming</span>
                 </div>
 
                 <button onClick={() => handleTaskComplete(task.id)}>
@@ -99,7 +128,7 @@ function SchedulePage() {
         ) : (
           completedTasks.map((task) => (
             <p key={task.id} className={styles.completedTask}>
-              ✅ {task.task} for {task.plantName}
+              ✅ {task.taskName} for {task.commonName}
             </p>
           ))
         )}
