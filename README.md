@@ -4,6 +4,8 @@
 
 *A full-stack gardening companion application built with React, Node.js, Express, and Firebase.*
 
+Beginner gardeners often struggle to understand different plant requirements and remember plant care routines.
+
 Garden Buddy helps users discover plants, build a personalised digital garden, and automatically generate plant care schedules. Users can search thousands of plants using the Perenual API, save favourites to their garden, and keep track of care tasks.
 
 
@@ -100,6 +102,16 @@ Garden Buddy uses a React frontend, a Node.js and Express backend, Firebase serv
 
 
 ## Installation and Setup
+
+### Prerequisites
+
+Note that before running the project, you will need:
+
+- Node.js
+- npm
+- A Firebase project with Authentication and Cloud Firestore enabled
+- A Perenual API key
+- Git
 
 ### 1. Clone the repository
 
@@ -225,7 +237,7 @@ npm test
 - Weather API integration
 
 
-## Team
+## Team and contributions
 
 This project was completed as part of the [Code First Girls](https://codefirstgirls.com/) Full-stack Development CFGdegree.
 
@@ -238,3 +250,14 @@ Our team consisted of:
 - [Ozioma](https://github.com/Omanoma)
 - [Rachel](https://github.com/RKaurB)
 - [Siti](https://github.com/Ctdahlya2019)
+
+
+The key responsibilities of each team member are summarised below:
+
+- Julia created the initial project wireframe and design, established the frontend architecture, and developed the Landing page, navbar, footer, helped with authentication integration, and created shared UI components.
+- Siti developed the Dashboard page, created a reusable loading component, and fixed frontend bugs.
+- Hayley contributed to the task scheduling functionality, including scheduling templates, due date calculations, and testing for PlantSaved. She also helped create the initial database model (ERD) during the planning phase.
+- Ozioma led the Firebase backend integration, set up Firebase Authentication and Firestore, implemented the SavedPlant and Task models, backend endpoints, authentication flow, protected routes, and plant search functionality. She also resolved integration bugs and created the system architecture diagram.
+- Destiny developed the Schedule page, implemented the backend task management endpoints, connected the Schedule page to backend task data, and implemented task completion functionality.
+- Iman Jamal contributed to the frontend implementation of the Search page and plant discovery interface, including modal styling, and frontend feature integration.
+- Rachel implemented the Perenual API integration, plant search and plant details services, helped develop the scheduling service, and integrated the scheduling functionality into the backend. She also carried out backend and integration testing, and produced the backend design and API documentation.
