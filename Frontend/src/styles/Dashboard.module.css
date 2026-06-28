@@ -19,7 +19,7 @@
 /* Welcome bar */
 .welcomeBar {
   background: var(--color-cream);
-  color: var(--color-dark-green);
+  color: var(--color-light-green);
   border-radius: 12px;
   padding: 1.2rem 1.5rem;
   margin-bottom: 2rem;

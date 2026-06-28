@@ -32,4 +32,16 @@
     return res;
   }
 
+    export async function SignOutAPI(){
+    let fullUrl = `${url}signout`
+      let res = await fetch(fullUrl,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        }
+      }
+    );
+    return res;
+  }
+
   export default LoginAPI;
