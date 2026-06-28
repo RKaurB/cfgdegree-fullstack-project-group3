@@ -44,7 +44,7 @@ class Scheme {
         // console.log("Checking field:", fieldName);
         // console.log("Value:", fieldValue);
         // Check if field missing (null or empty)
-        if (fieldValue === null || fieldValue === "") {
+        if (fieldValue === null || fieldValue === "" || fieldValue === undefined) {
             return false;
         }
     }
