@@ -55,7 +55,6 @@ function LandingPage() {
         formData.get("password1")
       ).then(async (res) => {
         let data = await res.json();
-        console.log(data);
         if (res.status == 201) {
           let input = {
             email: data.email,

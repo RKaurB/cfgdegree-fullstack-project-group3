@@ -26,23 +26,25 @@ function SearchPage() {
   
   useEffect(() => {
   const fetchPlants = async () => {
-    //console.log(query)
-    SearchPlantAPI(searchTerm).then(async (res)=>{
+    try{
+    SearchPlantAPI(searchTerm.toLowerCase()).then(async (res)=>{
       let data = await res.json()
-      if(res.status == 200){
-        //console.log(data)
+      if(res?.status == 200){
         setFilteredPlantList(data)
+        return
       }
-      //console.log(data)
-    });
-  };
-
-  if (searchTerm && searchTerm.trim != "") {
+      else{
+        setFilteredPlantList([])
+      }
+      
+    })}catch(e){
+      setFilteredPlantList([])
+      return
+    }
+  }
     setFilteredPlantList([])
     fetchPlants();
-  } else {
-    setFilteredPlantList([]);
-  }
+  
 
   return ()=>{
     console.log("Clean up")

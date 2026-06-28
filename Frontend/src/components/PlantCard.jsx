@@ -16,7 +16,7 @@ function PlantCard({ plant, onViewDetails }) {
       
       <img src={plant.image} alt={plant.commonName} />
 
-      <h3>{plant.name}</h3>
+      <h3>{plant.commonName}</h3>
       
       <button
   className="btn-garden-dark"
