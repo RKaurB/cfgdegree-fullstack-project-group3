@@ -23,7 +23,7 @@ function PlantDetailsModal({ plant, onClose }) {
 
   const AddItemGarden = ()=>{
     if(plantDetail == null) return;
-    AddNewPlantToDashboard(plantDetail,currentUsername).then(async (res)=>{
+        AddNewPlantToDashboard(plantDetail,currentUsername).then(async (res)=>{
       let data = await res.json();
       if(res.ok){
         nav("/dashboard");
