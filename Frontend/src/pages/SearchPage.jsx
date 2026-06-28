@@ -24,20 +24,25 @@ function SearchPage() {
   
   useEffect(() => {
   const fetchPlants = async () => {
-    console.log(query)
-    SearchPlantAPI(query).then(async (res)=>{
+    try{
+    SearchPlantAPI(query.toLowerCase()).then(async (res)=>{
       let data = await res.json()
-      if(res.status == 200){
-        console.log(data)
+      if(res?.status == 200){
         setFilteredPlantList(data)
+        return
       }
-      console.log(data)
-    })
+      else{
+        setFilteredPlantList([])
+      }
+      
+    })}catch(e){
+      setFilteredPlantList([])
+      return
+    }
   }
-  if (query && query != "") {
     setFilteredPlantList([])
     fetchPlants();
-  }
+  
 
   return ()=>{
     console.log("Clean up")
