@@ -1,4 +1,4 @@
-const {Account} = require("./Account")
+const {Account} = require("../Auth/Account")
 
 let account
 beforeAll(() => {
