@@ -175,6 +175,12 @@ npm run dev
 
 The application should now be available in your browser.
 
+### 7. Note
+To run the Backend Jest Test file, if desired:
+From `/Backend`
+```
+npm test
+```
 
 ## API endpoints
 

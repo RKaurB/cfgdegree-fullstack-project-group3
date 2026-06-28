@@ -67,7 +67,7 @@ useEffect(() => {
     if (res && res.length > 0) {
       setPlants(res);
     } else {
-      setPlants(mockPlants);
+      setPlants([]);
     }
 
     setLoading(false);
