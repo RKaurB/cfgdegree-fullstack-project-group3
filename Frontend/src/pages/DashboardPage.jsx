@@ -55,13 +55,24 @@ function Dashboard() {
   // Loading State
   const [loading, setLoading] = useState(true);
   
-  useEffect(() => {
-      UserSavedList().then((res)=>{
-        setPlants(res);
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //     UserSavedList().then((res)=>{
+  //       setPlants(res);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
+useEffect(() => {
+  UserSavedList().then((res) => {
+    if (res && res.length > 0) {
+      setPlants(res);
+    } else {
+      setPlants(mockPlants);
+    }
+
+    setLoading(false);
+  });
+}, []);
 
   // Redirecting to care schedule pages
   const handleView = (plantName) => {
