@@ -9,6 +9,8 @@ For architecture, scheduling logic, Firestore data structures, and external (Per
 - `docs/scheduling-task-generation-design.md`
 - `docs/perenual-api-research.md`
 
+**Note:** This document was created during the backend integration phase of the project. Some later additions (e.g. the task management endpoints) are not included here, but are documented in the project `README`.
+
 
 ## Base URL
 
@@ -313,10 +315,3 @@ Frontend API helper functions are currently located in:
 | `Backend/Services/SchedulingService.js` | Generates care tasks and due dates                   |
 | `Backend/Database/Firebase.js`          | Firebase Authentication and Firestore helper methods |
 
-
-## Notes & Limitations
-
-- Firebase Authentication integration still in progress.
-- Task deletion queries currently support Postman testing, and need to be reviewed once authentication fully integrated.
-- Schedule page currently uses mock task data rather than Firestore tasks.
-- Recurring task generation is designed but not yet implemented (potential future enhancement).

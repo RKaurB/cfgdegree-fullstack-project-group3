@@ -1,0 +1,1 @@
+![Project architecture diagram](./images/architecture-diagram.png)
