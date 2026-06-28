@@ -5,8 +5,8 @@ import styles from "../../src/styles/Dashboard.module.css";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import {GetSavedPlantList,RemovePlantFromGarden} from "../api/SavedPlantAPI"
+import { GetTaskList } from "../api/TaskAPI";
 import LoadingSection from "../components/LoadingSection";
-
 
 async function UserSavedList(){
   let res = await GetSavedPlantList()
@@ -15,7 +15,7 @@ async function UserSavedList(){
     console.log(JSON.stringify(resJson))
     return resJson?.data
   }
-  return mockPlants
+  return [];
 }
 
 function Dashboard() {
@@ -32,47 +32,53 @@ function Dashboard() {
   if(currentUsername) userName = currentUsername
 
   // Added local state to hold data 
-  // const [plants, setPlants] = useState([]); // to test the empty state
-  const [plants, setPlants] = useState([]); // uncomment this to back to the grid layout
+  const [plants, setPlants] = useState([]); 
+  
+  // Task list
+  const [tasks, setTasks] = useState([]);
 
   // Search/filter plants 
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredPlants = plants.filter((plant) => 
-    plant.commonName?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
-  // task to be completed (2 plants)
-  const tasksDueToday = plants.slice(0, 2); 
-  const pendingTasksCount = tasksDueToday.length;
-
-//===Modal state to delete plant====
+  //===Modal state to delete plant====
   // Modal visibility states (visible popup)
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Hold the complete selected plant object instead of just text
   const [plantToDelete, setPlantToDelete] = useState(null);
 
-  // Loading State
+   // Loading State
   const [loading, setLoading] = useState(true);
-  
-  // useEffect(() => {
-  //     UserSavedList().then((res)=>{
-  //       setPlants(res);
-  //       setLoading(false);
-  //     });
-  // }, []);
+
+  const filteredPlants = plants.filter((plant) => 
+    plant.commonName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // task to be completed (2 plants)
+  const tasksDueToday = tasks.filter((task) => !task.completed);
+  const pendingTasksCount = tasksDueToday.length;
 
 useEffect(() => {
-  UserSavedList().then((res) => {
-    if (res && res.length > 0) {
-      setPlants(res);
-    } else {
-      setPlants(mockPlants);
-    }
+  const loadDashboardData = async () => {
+    try {
+      const plantsRes = await UserSavedList();
+      setPlants(plantsRes);
 
-    setLoading(false);
-  });
+      const taskRes = await GetTaskList();
+      if (taskRes.status === 200) {
+        const taskData = await taskRes.json();
+        setTasks(taskData.data || []); 
+      }
+    } catch (error) {
+      console.error("Failed to load data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadDashboardData();
 }, []);
+
 
   // Redirecting to care schedule pages
   const handleView = (plantName) => {
@@ -178,27 +184,33 @@ if (loading) {
 
           {/* Today's Task List*/}
           <h2 className={styles.sectionTitle}>Action Required</h2>
-          {pendingTasksCount > 0 && (
+          {pendingTasksCount > 0 ? (
             <div className={styles.taskSection}>
               <div className={styles.taskListWrapper}>
-                {tasksDueToday.map((plant) => (
+                {tasksDueToday.map((task) => {
+                  const emojis = { "Watering": "💧", "Soil Check": "🪴", "Fertilizing": "🧪" };
+                  const currentEmoji = emojis[task.taskName] || "📋";
+
+                  return (
                   <div 
-                    key={plant.id}
+                    key={task.id}
                     className={styles.taskRow}
-                    onClick={() => handleView(plant.name)}
+                    onClick={() => navigate("/schedule")}
                   >
                     <span className={styles.taskText}>
-                      💧 Water <b>{plant.name}</b>
+                      {currentEmoji} {task.taskName} <b>{task.commonName}</b>
                     </span>
                     <span className={styles.taskLinkText}>
                       View →
                     </span>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
-          )}
-
+          ) : (
+            <p className={styles.noResultsText}>🎉 All tasks completed for today!</p>
+            )}
           
       {/* Plants grid */}
       <h2 className={styles.sectionTitle}>Your Plants</h2>
