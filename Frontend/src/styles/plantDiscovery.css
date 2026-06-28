@@ -110,6 +110,11 @@ h1 {
     gap: 12px;
     text-align: center;
 }
+.modal-content img{
+    width: 100%;
+    max-width: 420px;
+    object-fit: contain;
+}
 
 /* Close Button */
 .close-btn {

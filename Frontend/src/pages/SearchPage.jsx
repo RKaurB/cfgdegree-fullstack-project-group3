@@ -1,25 +1,53 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import SearchBar from "../components/SearchBar.jsx";
 import SearchResults from "../components/SearchResults.jsx";
 import PlantDetailsModal from "../components/PlantDetailsModal.jsx";
 import mockPlants from "../data/mockPlants.js";
 import "../styles/plantDiscovery.css";
+import {SearchPlantAPI,GetPlantByIdAPI} from"../api/PlantServiceAPI.js";
 
 function SearchPage() {
   // Stores the user's search input
   const [query, setQuery] = useState("");
 
+  // Change only when user click search button
   const [searchTerm, setSearchTerm] = useState("");
 
   // Stores the plant clicked by the user
   // If null its closed
   const [selectedPlant, setSelectedPlant] = useState(null);
+  const [filterPlantList,setFilteredPlantList] = useState([])
 
   // Filter plants based on search input
   const filteredPlants = mockPlants.filter((plant) =>
     plant.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  useEffect(() => {
+  const fetchPlants = async () => {
+    //console.log(query)
+    SearchPlantAPI(searchTerm).then(async (res)=>{
+      let data = await res.json()
+      if(res.status == 200){
+        //console.log(data)
+        setFilteredPlantList(data)
+      }
+      //console.log(data)
+    });
+  };
+
+  if (searchTerm && searchTerm.trim != "") {
+    setFilteredPlantList([])
+    fetchPlants();
+  } else {
+    setFilteredPlantList([]);
+  }
+
+  return ()=>{
+    console.log("Clean up")
+  }
+},[searchTerm]);
 
   const handleSearch = () => {
     setSearchTerm(query);
@@ -35,7 +63,7 @@ function SearchPage() {
       
       {/* Grid of plant cards */}
       <SearchResults
-        plants={filteredPlants}
+        plants={filterPlantList}
         onViewDetails={setSelectedPlant}
       />
 

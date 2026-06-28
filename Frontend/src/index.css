@@ -123,3 +123,6 @@ footer {
   color: var(--color-cream);
   background-color: var(--color-dark-green);
 }
+main {
+  min-height: calc(100vh - 59px - 114.19px);
+}
