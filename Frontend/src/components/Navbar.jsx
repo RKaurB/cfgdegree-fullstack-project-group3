@@ -24,7 +24,7 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand">
       <div className="container-fluid">
-        <a href="/" className="navbar-brand">
+        <a className="navbar-brand">
             Garden Buddy
           <img
             src={logo}

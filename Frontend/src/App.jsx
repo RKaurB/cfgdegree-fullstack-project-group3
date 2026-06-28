@@ -14,12 +14,14 @@ function App(){
   <Provider store={store}>
     <BrowserRouter>
       <NavBar></NavBar>
+      <main>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/schedule" element={<ProtectRoutes><SchedulePage /></ProtectRoutes>} />
           <Route path="/search" element={<ProtectRoutes><SearchPage /></ProtectRoutes>} />
           <Route path="/dashboard" element={<ProtectRoutes><DashboardPage /></ProtectRoutes>} />
         </Routes>
+        </main>
       <Footer></Footer>
     </BrowserRouter>
   </Provider>)
