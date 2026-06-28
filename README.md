@@ -172,6 +172,11 @@ From `/Frontend`:
 ```
 npm run dev
 ```
+#### Run the Backend Jest Test
+From `/Backend`
+```
+npm test
+```
 
 The application should now be available in your browser.
 
