@@ -19,7 +19,7 @@ function PlantDetailsModal({ plant, onClose }) {
     const fetchPlantDetails = async () => {
       try {
         // Testing - temp delay to test loading spinner
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
+        // await new Promise((resolve) => setTimeout(resolve, 4000));
 
         // GetPlantByIdAPI(plant.id).then(async (res) => {
         const res = await GetPlantByIdAPI(plant.id);
@@ -58,6 +58,13 @@ function PlantDetailsModal({ plant, onClose }) {
     return <LoadingSection text="Loading plant details..." />;
   }
 
+  // Display placeholder image by default
+  let imageToDisplay = plantPlaceholder;
+  // If API returns a plant image, display that instead
+  if (plantDetail && plantDetail.image) {
+    imageToDisplay = plantDetail.image;
+  }
+
   return (
     plantDetail && (
       <>
@@ -71,7 +78,7 @@ function PlantDetailsModal({ plant, onClose }) {
             </button>
 
             {/* Plant image */}
-            <img src={plantDetail.image} alt={plantDetail.commonName} />
+            <img src={imageToDisplay} alt={plantDetail.commonName} />
 
             {/* Title */}
             <h2>{plantDetail.commonName}</h2>
