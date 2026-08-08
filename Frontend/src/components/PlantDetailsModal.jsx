@@ -19,13 +19,16 @@ function PlantDetailsModal({ plant, onClose }) {
     const fetchPlantDetails = async () => {
       try {
         // Testing - temp delay to test loading spinner
-        // await new Promise((resolve) => setTimeout(resolve, 4000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
 
         // GetPlantByIdAPI(plant.id).then(async (res) => {
         const res = await GetPlantByIdAPI(plant.id);
 
         if (res.status === 200) {
           const data = await res.json();
+
+          // Temp test
+          console.log(data);
 
           // Save returned plant info into state
           setPlantDetail(data);
@@ -53,54 +56,65 @@ function PlantDetailsModal({ plant, onClose }) {
       console.log(data);
     });
   };
-  // Display loading component instead of modal while waiting for API response
+
+  // If plant details are still loading, show loading indicator inside modal
   if (loading) {
-    return <LoadingSection text="Loading plant details..." />;
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <LoadingSection text="Loading plant details..." />
+        </div>
+      </div>
+    );
+  }
+
+  // If loading finished but no plant details returned, don't try to display plant info
+  if (plantDetail === null) {
+    return null;
   }
 
   // Display placeholder image by default
   let imageToDisplay = plantPlaceholder;
   // If API returns a plant image, display that instead
-  if (plantDetail && plantDetail.image) {
+  if (plantDetail.image) {
     imageToDisplay = plantDetail.image;
   }
 
+  // Display normal Plant Details modal
   return (
-    plantDetail && (
-      <>
-        {/* Modal overlay background */}
-        <div className="modal-overlay" onClick={onClose}>
-          {/* Modal box content */}
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {/* Close button */}
-            <button className="close-btn" onClick={onClose}>
-              ✕
-            </button>
+    <>
+      {/* Modal overlay background */}
+      <div className="modal-overlay" onClick={onClose}>
+        {/* Modal box content */}
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          {/* Close button */}
+          <button className="close-btn" onClick={onClose}>
+            ✕
+          </button>
 
-            {/* Plant image */}
-            <img src={imageToDisplay} alt={plantDetail.commonName} />
+          {/* Plant image */}
+          <img src={imageToDisplay} alt={plantDetail.commonName} />
 
-            {/* Title */}
-            <h2>{plantDetail.commonName}</h2>
+          {/* Title */}
+          <h2>{plantDetail.commonName}</h2>
 
-            {/* Plant info */}
-            <p>🌱 Difficulty: {plantDetail.maintenance}</p>
-            <p>☀️ Light: {plantDetail.sunlight}</p>
-            <p>💧 Water: {plantDetail.watering}</p>
+          {/* Plant info */}
+          <p>🌱 Difficulty: {plantDetail.maintenance}</p>
+          <p>☀️ Light: {plantDetail.sunlight}</p>
+          <p>💧 Water: {plantDetail.watering}</p>
 
-            {/* Description */}
-            <p className="description">
-              {plantDetail.description || "No description available."}
-            </p>
+          {/* Description */}
+          <p className="description">
+            {plantDetail.description || "No description available."}
+          </p>
 
-            {/* Action button */}
-            <button className="btn-garden-dark" onClick={AddItemGarden}>
-              + Add to My Garden
-            </button>
-          </div>
+          {/* Action button */}
+          <button className="btn-garden-dark" onClick={AddItemGarden}>
+            + Add to My Garden
+          </button>
         </div>
-      </>
-    )
+      </div>
+    </>
   );
 }
 
