@@ -121,7 +121,7 @@ function PlantDetailsModal({ plant, onClose }) {
 
           {/* Plant info */}
           <p>🌱 Difficulty: {plantDetail.maintenance}</p>
-          <p>☀️ Light: {plantDetail.sunlight}</p>
+          <p>☀️ Light: {plantDetail.sunlight.join(", ")}</p>
           <p>💧 Water: {plantDetail.watering}</p>
 
           {/* Description */}

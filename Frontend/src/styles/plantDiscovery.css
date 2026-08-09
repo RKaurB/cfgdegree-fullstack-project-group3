@@ -112,7 +112,7 @@ h1 {
     gap: 12px;
     text-align: center;
     /* Allow user to scroll if content is too tall */
-    overflow-y: auto;
+    /* overflow-y: auto; */
     /* Include padding within modal's max height */
     box-sizing: border-box;
 }
@@ -128,13 +128,16 @@ h1 {
     position: absolute;
     top: 10px;
     right: 10px;
+    /* Put close (x) button above the image */
+    z-index: 1;
 
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: none;
 
-    background: rgba(0, 0, 0, 0.05);
+    /* background: rgba(0, 0, 0, 0.05); */
+    background: var(--color-cream);
     color: var(--color-dark-green);
     font-size: 20px;
     cursor: pointer;
@@ -143,6 +146,7 @@ h1 {
     align-items: center;
     justify-content: center;
 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     transition: background 0.15s ease;
 }
 
@@ -163,6 +167,13 @@ h1 {
     margin: 4px 0;
     font-size: 15px;
     color: var(--color-dark-green) !important;
+}
+
+/* Make lengthy plant descriptions scrollable */
+.modal-content .description {
+    /* max-height: 180px; */
+    max-height: 220px;
+    overflow-y: auto;
 }
 
 /* Modal Action Buttons */
