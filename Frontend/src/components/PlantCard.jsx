@@ -14,6 +14,7 @@ function PlantCard({ plant, onViewDetails }) {
 
   // Display placeholder image by default
   let imageToDisplay = plantPlaceholder;
+
   // If API returns a plant image, display that instead
   if (plant.image) {
     imageToDisplay = plant.image;
@@ -21,7 +22,15 @@ function PlantCard({ plant, onViewDetails }) {
 
   return (
     <div className="card" onClick={handleClick}>
-      <img src={imageToDisplay} alt={plant.commonName} />
+      {/* <img src={imageToDisplay} alt={plant.commonName} /> */}
+      <img
+        src={imageToDisplay}
+        alt={plant.commonName}
+        // If plant image can't be loaded, display placeholder image instead
+        onError={(event) => {
+          event.target.src = plantPlaceholder;
+        }}
+      />
 
       <h3>{plant.commonName}</h3>
 
