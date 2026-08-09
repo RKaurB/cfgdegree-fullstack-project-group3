@@ -99,6 +99,8 @@ h1 {
     position: relative;
     width: 100%;
     max-width: 420px;
+    /* Keep modal within 90% of the browser window height */
+    max-height: 90vh;
     padding: 16px 14px 18px;
     background: var(--color-cream) !important;
     color: var(--color-dark-green) !important;
@@ -109,7 +111,12 @@ h1 {
     align-items: center;
     gap: 12px;
     text-align: center;
+    /* Allow user to scroll if content is too tall */
+    overflow-y: auto;
+    /* Include padding within modal's max height */
+    box-sizing: border-box;
 }
+
 .modal-content img{
     width: 100%;
     max-width: 420px;
