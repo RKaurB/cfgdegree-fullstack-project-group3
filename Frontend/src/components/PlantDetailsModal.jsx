@@ -11,6 +11,8 @@ function PlantDetailsModal({ plant, onClose }) {
   const [plantDetail, setPlantDetail] = useState(null);
   // Tracks whether still waiting for Perenual API response
   const [loading, setLoading] = useState(true);
+  // Tracks whether plant details could not be loaded
+  const [error, setError] = useState(false);
   const currentUsername = useSelector((state) => state.user.id);
   const nav = useNavigate();
 
@@ -32,6 +34,9 @@ function PlantDetailsModal({ plant, onClose }) {
 
           // Save returned plant info into state
           setPlantDetail(data);
+        } else {
+          // Else if API request fails, tell React component that plant details couldn't be loaded
+          setError(true);
         }
       } catch (error) {
         console.error("Failed to load plant details:", error);
@@ -69,8 +74,24 @@ function PlantDetailsModal({ plant, onClose }) {
   }
 
   // If loading finished but no plant details returned, don't try to display plant info
-  if (plantDetail === null) {
-    return null;
+  // if (plantDetail === null) {
+  //   return null;
+  // }
+
+  // If API couldn't provide plant details, display appropriate message to user
+  if (error) {
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="close-btn" onClick={onClose}>
+            ✕
+          </button>
+
+          <h2>Plant details unavailable</h2>
+          <p>We could not retrieve the details for this plant right now.</p>
+        </div>
+      </div>
+    );
   }
 
   // Display placeholder image by default
