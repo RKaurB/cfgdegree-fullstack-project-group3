@@ -22,7 +22,6 @@ function PlantCard({ plant, onViewDetails }) {
 
   return (
     <div className="card" onClick={handleClick}>
-      {/* <img src={imageToDisplay} alt={plant.commonName} /> */}
       <img
         src={imageToDisplay}
         alt={plant.commonName}

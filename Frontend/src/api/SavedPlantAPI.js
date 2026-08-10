@@ -12,7 +12,6 @@ export async function AddNewPlantToDashboard(prop, currentUserID) {
     plantApiId: prop.id,
     commonName: prop?.commonName,
     scientificName: prop?.scientificName,
-    // imageURL: prop?.image,
     imageURL: prop.image || plantPlaceholder,
     plantType: prop?.type,
     dateAdded: stringDate,
@@ -28,7 +27,6 @@ export async function AddNewPlantToDashboard(prop, currentUserID) {
       plantApiId: prop.id,
       commonName: prop?.commonName,
       scientificName: prop?.scientificName,
-      // imageURL: prop?.image,
       // Use API image when available, else save local placeholder image
       imageURL: prop.image || plantPlaceholder,
       plantType: prop?.type,

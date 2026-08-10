@@ -111,8 +111,6 @@ h1 {
     align-items: center;
     gap: 12px;
     text-align: center;
-    /* Allow user to scroll if content is too tall */
-    /* overflow-y: auto; */
     /* Include padding within modal's max height */
     box-sizing: border-box;
 }
@@ -136,7 +134,6 @@ h1 {
     border-radius: 50%;
     border: none;
 
-    /* background: rgba(0, 0, 0, 0.05); */
     background: var(--color-cream);
     color: var(--color-dark-green);
     font-size: 20px;
@@ -171,7 +168,6 @@ h1 {
 
 /* Make lengthy plant descriptions scrollable */
 .modal-content .description {
-    /* max-height: 180px; */
     max-height: 220px;
     overflow-y: auto;
 }

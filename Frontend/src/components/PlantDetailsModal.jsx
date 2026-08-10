@@ -21,16 +21,15 @@ function PlantDetailsModal({ plant, onClose }) {
     const fetchPlantDetails = async () => {
       try {
         // Testing - temp delay to test loading spinner
-        await new Promise((resolve) => setTimeout(resolve, 4000));
+        // await new Promise((resolve) => setTimeout(resolve, 4000));
 
-        // GetPlantByIdAPI(plant.id).then(async (res) => {
         const res = await GetPlantByIdAPI(plant.id);
 
         if (res.status === 200) {
           const data = await res.json();
 
           // Temp test
-          console.log(data);
+          // console.log(data);
 
           // Save returned plant info into state
           setPlantDetail(data);
@@ -72,11 +71,6 @@ function PlantDetailsModal({ plant, onClose }) {
       </div>
     );
   }
-
-  // If loading finished but no plant details returned, don't try to display plant info
-  // if (plantDetail === null) {
-  //   return null;
-  // }
 
   // If API couldn't provide plant details, display appropriate message to user
   if (error) {

@@ -4,9 +4,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import SearchResults from "../components/SearchResults.jsx";
 import PlantDetailsModal from "../components/PlantDetailsModal.jsx";
 import LoadingSection from "../components/LoadingSection.jsx";
-// import mockPlants from "../data/mockPlants.js";
 import "../styles/plantDiscovery.css";
-// import {SearchPlantAPI,GetPlantByIdAPI} from"../api/PlantServiceAPI.js";
 import {SearchPlantAPI} from"../api/PlantServiceAPI.js";
 
 
@@ -27,11 +25,6 @@ function SearchPage() {
 
   // Tracks whether user has searched
   const [hasSearched, setHasSearched] = useState(false);
-
-  // Filter plants based on search input
-  // const filteredPlants = mockPlants.filter((plant) =>
-  //   plant.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
   
   useEffect(() => {
     // If user hasn't yet searched, stop here and don't fetch anything
@@ -44,27 +37,19 @@ function SearchPage() {
         const res = await SearchPlantAPI(searchTerm.toLowerCase());
         const data = await res.json();
 
-        // SearchPlantAPI(searchTerm.toLowerCase()).then(async (res) => {
-        //   let data = await res.json();
           if (res?.status == 200) {
             setFilteredPlantList(data);
-            // setLoading(false);
-            // return;
           } else {
             setFilteredPlantList([]);
-            // setLoading(false);
           }
-      // } catch (e) {
       } catch {
         setFilteredPlantList([]);
-        // setLoading(false);
         return;
       } finally {
         setLoading(false);
       }
     };
     
-    // setFilteredPlantList([]);
     fetchPlants();
 
     return () => {
