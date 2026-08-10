@@ -25,12 +25,18 @@ function SearchPage() {
   // Tracks whether plant search results are loading
   const [loading, setLoading] = useState(false);
 
+  // Tracks whether user has searched
+  const [hasSearched, setHasSearched] = useState(false);
+
   // Filter plants based on search input
   // const filteredPlants = mockPlants.filter((plant) =>
   //   plant.name.toLowerCase().includes(searchTerm.toLowerCase())
   // );
   
   useEffect(() => {
+    // If user hasn't yet searched, stop here and don't fetch anything
+    if (!hasSearched) return;
+
     const fetchPlants = async () => {
       try {
         setLoading(true);
@@ -64,9 +70,10 @@ function SearchPage() {
     return () => {
       console.log("Clean up");
     };
-  }, [searchTerm]);
+  }, [searchTerm, hasSearched]);
 
   const handleSearch = () => {
+    setHasSearched(true);
     setSearchTerm(query);
   };
 
@@ -83,7 +90,11 @@ function SearchPage() {
       {loading && <LoadingSection text="Searching for plants..." />}
       {/* Show plant results after searching */}
       {!loading && (
-        <SearchResults plants={filterPlantList} onViewDetails={setSelectedPlant} />
+        <SearchResults 
+          plants={filterPlantList}
+          onViewDetails={setSelectedPlant} 
+          hasSearched={hasSearched}
+        />
       )}
 
       {/* Modal appears when a plant selected */}
