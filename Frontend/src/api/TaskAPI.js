@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/tasks/";
+const url = "https://garden-buddy-l8k7.onrender.com/tasks/";
 
 export async function GetTaskList() {
   return await fetch(`${url}GetAllTaskList`, {

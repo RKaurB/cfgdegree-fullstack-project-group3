@@ -1,4 +1,4 @@
-  let url = "http://localhost:3000/garden/"
+  let url = "https://garden-buddy-l8k7.onrender.com/garden/"
 
   export async function AddNewPlantToDashboard(prop,currentUserID){
       let fullUrl = `${url}AddNewPlant`

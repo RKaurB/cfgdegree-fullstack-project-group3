@@ -1,4 +1,4 @@
- let url = "http://localhost:3000/api/plants/"
+ let url = "https://garden-buddy-l8k7.onrender.com/api/plants/"
   export async function SearchPlantAPI(name){
     let fullUrl = `${url}search?q=${name}`
       let res = await fetch(fullUrl,{

@@ -1,4 +1,4 @@
-  let url = "http://localhost:3000/"
+  let url = "https://garden-buddy-l8k7.onrender.com"
   export async function LoginAPI(email,pass){
     let fullUrl = `${url}login`
       let res = await fetch(fullUrl,{
