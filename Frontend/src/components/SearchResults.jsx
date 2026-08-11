@@ -1,10 +1,10 @@
 import PlantCard from "./PlantCard.jsx";
 
-function SearchResults({ plants, onViewDetails }) {
+function SearchResults({ plants, onViewDetails, hasSearched }) {
   return (
     <div className="grid">
       {/* If no plants match search, show message */}
-      {plants.length === 0 ? (
+      {hasSearched && plants.length === 0 ? (
         <p>No plants found 🌱</p>
       ) : (
         // Loop through filtered plants and render a card for each one
