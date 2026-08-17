@@ -1,4 +1,4 @@
-  let url = "https://garden-buddy-l8k7.onrender.com"
+let url = import.meta.env.VITE_API_URL
   export async function LoginAPI(email,pass){
     let fullUrl = `${url}login`
       let res = await fetch(fullUrl,{

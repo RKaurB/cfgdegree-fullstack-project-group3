@@ -1,4 +1,4 @@
- let url = "https://garden-buddy-l8k7.onrender.com/api/plants/"
+let url = import.meta.env.VITE_API_URL
   export async function SearchPlantAPI(name){
     let fullUrl = `${url}search?q=${name}`
       let res = await fetch(fullUrl,{

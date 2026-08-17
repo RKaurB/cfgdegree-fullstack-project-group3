@@ -1,4 +1,4 @@
-const url = "https://garden-buddy-l8k7.onrender.com/tasks/";
+let url = import.meta.env.VITE_API_URL
 
 export async function GetTaskList() {
   return await fetch(`${url}GetAllTaskList`, {
