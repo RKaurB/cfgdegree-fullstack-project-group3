@@ -1,4 +1,4 @@
- let url = "http://localhost:3000/api/plants/"
+let url = import.meta.env.VITE_API_URL
   export async function SearchPlantAPI(name){
     let fullUrl = `${url}search?q=${name}`
       let res = await fetch(fullUrl,{

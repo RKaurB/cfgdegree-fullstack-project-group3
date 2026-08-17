@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/tasks/";
+let url = import.meta.env.VITE_API_URL
 
 export async function GetTaskList() {
   return await fetch(`${url}GetAllTaskList`, {

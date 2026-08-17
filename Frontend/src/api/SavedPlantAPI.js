@@ -1,7 +1,6 @@
+let url = import.meta.env.VITE_API_URL
 // Use placeholder image when plant has no API image
 import plantPlaceholder from "../assets/images/plant-placeholder.png";
-
-let url = "http://localhost:3000/garden/";
 
 export async function AddNewPlantToDashboard(prop, currentUserID) {
   let fullUrl = `${url}AddNewPlant`;
